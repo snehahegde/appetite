@@ -24,7 +24,7 @@ import java.util.List;
 public class AddReviewActivity extends AppCompatActivity {
     EditText rev;
     String ratingValue;
-    String user= "Andrew";
+    String user= "Leo";
     String chef="Monica";
     ContentValues newValues;
     @Override

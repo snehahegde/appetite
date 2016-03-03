@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">APPetite</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_chef_details">ChefDetails</string>
+    <string name="title_activity_order_details">OrderDetailsActivity</string>
+    <string name="title_activity_login">Login</string>
+    <string name="title_activity_register">Register</string>
+    <string name="title_activity_menulist">Menu List</string>
+    <string name="title_activity_menu">Menu</string>
+    <string name="eat_button">Eat</string>
+    <string name="cook_button">Cook</string>
+    <string name="title_activity_chef_menu_item">Chef_menuItem</string>
+</resources>

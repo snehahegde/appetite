@@ -20,8 +20,16 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Large Text"
+            android:text=""
             android:layout_weight="1"
             android:id="@+id/rowreview" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text=""
+            android:layout_weight="1"
+            android:id="@+id/rowdistance" />
     </LinearLayout>
 </LinearLayout>

@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.List;
 
 /**
@@ -15,10 +17,14 @@ import java.util.List;
 public class ChefAdapter extends ArrayAdapter<Chef> {
 
     private List<Chef> chefList;
+    private double mLatitude;
+    private double mLongitude;
 
-    public ChefAdapter(Context context, int resource, List<Chef> chefList) {
+    public ChefAdapter(Context context, int resource, List<Chef> chefList, double latitude, double longitude) {
         super(context, resource, chefList);
         this.chefList = chefList;
+        mLatitude = latitude;
+        mLongitude = longitude;
     }
 
     public StringBuilder drawStars(int rating) {
@@ -46,6 +52,17 @@ public class ChefAdapter extends ArrayAdapter<Chef> {
         //Set the review stars
         TextView reviewTextView = (TextView)v.findViewById(com.appetite.R.id.rowreview);
         reviewTextView.setText(drawStars(chef.getRating()));
+
+        //Set the distance
+
+        double chefLattitude= chef.getLatitude();
+        double chefLongitude = chef.getLongitude();
+
+        double distance = Math.sqrt((Math.pow(mLatitude - chefLattitude, 2) + (Math.pow(mLongitude - chefLongitude, 2))));
+        TextView distanceTextView = (TextView)v.findViewById(R.id.rowdistance);
+        //String distanceStr = String.valueOf(distance*69);
+        String distanceStr = String.format("%.2f mi", distance * 69);
+        distanceTextView.setText(distanceStr);
 
         return v;
     }

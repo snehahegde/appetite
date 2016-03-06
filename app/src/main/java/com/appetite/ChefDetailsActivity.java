@@ -29,6 +29,14 @@ public class ChefDetailsActivity extends AppCompatActivity {
         ImageView imageView = (ImageView)findViewById(com.appetite.R.id.chefImage);
         imageView.setImageResource(com.appetite.R.drawable.caesarsalad);
 
+        Button mapButton = (Button) findViewById(R.id.mapbutton);
+        mapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
         Button orderButton = (Button)findViewById(com.appetite.R.id.orderButton);
         orderButton.setOnClickListener(new View.OnClickListener() {
             @Override

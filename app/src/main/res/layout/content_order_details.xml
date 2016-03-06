@@ -46,7 +46,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="5"
                 android:layout_marginLeft="5dp"
-                android:id="@+id/textView7" />
+                android:id="@+id/quantityAvailable" />
 
 
         </LinearLayout>
@@ -69,9 +69,10 @@
         <EditText
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/locationEditText"
-            android:text="2"
+            android:id="@+id/quantityRequired"
+            android:text=""
             android:layout_weight="2"
+            android:inputType="number"
             android:layout_gravity="bottom|center_horizontal" />
     </LinearLayout>
 
@@ -93,8 +94,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="$20"
-            android:id="@+id/textView9"
+            android:text=""
+            android:id="@+id/totalTextView"
             android:layout_gravity="center_horizontal" />
         </LinearLayout>
 
@@ -108,17 +109,10 @@
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="PAYPAL"
-            android:id="@+id/button1"
-            android:layout_gravity="bottom" />
+            android:text="PAY"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/payButton" />
 
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="CARD"
-            android:id="@+id/button2"
-            android:layout_gravity="bottom" />
     </LinearLayout>
 
     </LinearLayout>

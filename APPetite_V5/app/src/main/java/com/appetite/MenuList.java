@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.telephony.SmsManager;
 import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
@@ -15,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -56,9 +58,20 @@ public class MenuList extends AppCompatActivity {
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+              /**  try {
+                    SmsManager smsManager = SmsManager.getDefault();
+                    smsManager.sendTextMessage("+14086204112", null,"Testing if the SMS intent is working or not." , null, null);
+                    Toast.makeText(getApplicationContext(), "SMS sent.", Toast.LENGTH_LONG).show();
+                }
+
+                catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), "SMS faild, please try again.", Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
+                }*/
+
                 String keyWord = searchWord.getText().toString();
                 searchContent(keyWord);
-                Log.d("QWERTY", keyWord);
             }
         });
         Bundle bundle = getIntent().getExtras();
@@ -72,7 +85,7 @@ public class MenuList extends AppCompatActivity {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
+                menuList.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
 
@@ -80,7 +93,8 @@ public class MenuList extends AppCompatActivity {
                         String itemName = postSnapshot.child("item_name").getValue().toString();
                         String itemPrice = postSnapshot.child("item_price").getValue().toString();
                         String itemImage = postSnapshot.child("imageEncoded").getValue().toString();
-                        menuList.add(new Menu(itemName, itemPrice,itemImage));
+                        String itemCuisine = postSnapshot.child("cuisine").getValue().toString();
+                        menuList.add(new Menu(itemName, itemPrice,itemImage,itemCuisine));
                     }
 
                 }
@@ -97,7 +111,6 @@ public class MenuList extends AppCompatActivity {
     public void menuList(){
 
         menulistView = (ListView) findViewById(R.id.listView);
-
         menuListAdapter = new MenulistAdapter(this, R.layout.menulist_rowlayout, menuList);
         menulistView.setAdapter(menuListAdapter);
 
@@ -127,13 +140,14 @@ public class MenuList extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    if (postSnapshot.child("item_name").getValue() != null && postSnapshot.child("item_price").getValue() != null && postSnapshot.child("imageEncoded") != null) {
+                    if (postSnapshot.child("item_name").getValue() != null && postSnapshot.child("item_price").getValue() != null && postSnapshot.child("imageEncoded") != null&& postSnapshot.child("cuisine") != null) {
                         String itemName = postSnapshot.child("item_name").getValue().toString();
                         String itemPrice = postSnapshot.child("item_price").getValue().toString();
                         String itemImage = postSnapshot.child("imageEncoded").getValue().toString();
-                        if(itemName.equals(searchDish)){
-                            menuList.add(new Menu(itemName, itemPrice, itemImage));
-                            return;}
+                        String itemCuisine = postSnapshot.child("cuisine").getValue().toString();
+                        if(itemName.equals(searchDish) ||itemCuisine.equals(searchDish)){
+                            menuList.add(new Menu(itemName, itemPrice, itemImage,itemCuisine));
+                            }
                     }
                     menuList();
                 }
@@ -144,7 +158,6 @@ public class MenuList extends AppCompatActivity {
             }
         });
     }
-    @Override
     public boolean onCreateOptionsMenu(android.view.Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -159,10 +172,28 @@ public class MenuList extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_home) {
+            return true;
+        }
+        else if (id==R.id.action_profile){
+            return true;
+        }
+        else if(id == R.id.action_reviews){
+            Intent reviewsIntent = new Intent(this,ReviewsCookModuleActivity.class);
+            String chefName = "Monica";
+            reviewsIntent.putExtra("chef", chefName);
+            startActivity(reviewsIntent);
+            return true;
+        }
+        else if (id==R.id.action_logOut){
+            Intent logOutIntent = new Intent(this,MainActivity.class);
+            logOutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(logOutIntent);
+            this.finish();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
 }

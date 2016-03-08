@@ -3,6 +3,7 @@
     package="com.appetite">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SEND_SMS"/>
 
     <application
         android:allowBackup="true"
@@ -40,30 +41,22 @@
         <activity android:name=".ReviiewList" />
         <activity android:name=".AddReviewActivity" />
         <activity
-            android:name=".Menu"
-            android:label="@string/title_activity_menu" />
-        <activity
             android:name=".ChefMenuItemActivity"
-            android:label="@string/title_activity_chef_menu_item"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="@string/title_activity_chef_menu_item" />
         <activity
             android:name=".ChefMenulist"
             android:label="@string/title_activity_chef_menulist" />
         <activity
-            android:name=".ChefMenulistAdapter"
-            android:label="@string/title_activity_chef_menulist_adapter"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".ChefMenuInfo"
-            android:label="@string/title_activity_chef_menu_info"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="@string/title_activity_chef_menu_info" />
         <activity
             android:name=".CustomerRegister"
             android:label="@string/title_activity_customer_register" />
         <activity
             android:name=".ChefsEnrolledActivity"
-            android:label="@string/title_activity_chefs_enrolled"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:label="@string/title_activity_chefs_enrolled" />
+        <activity
+            android:name=".ReviewsCookModuleActivity"></activity>
     </application>
 
 </manifest>

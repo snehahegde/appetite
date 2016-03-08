@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -17,7 +18,7 @@ import com.firebase.client.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChefMenulist extends AppCompatActivity {
+public class ChefMenulist extends MainActivity {
 
     TextView displayLabel;
     String chefName;
@@ -101,5 +102,36 @@ public class ChefMenulist extends AppCompatActivity {
 
 
     }
+    public boolean onCreateOptionsMenu(android.view.Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_home) {
+            return true;
+        }
+        else if (id==R.id.action_profile){
+            return true;
+        }
+        else if(id == R.id.action_reviews){
+            Intent reviewsIntent = new Intent(this,ReviewsCookModuleActivity.class);
+            startActivity(reviewsIntent);
+            String chefName = "Monica";
+            reviewsIntent.putExtra("chef",chefName);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 
 }

@@ -28,7 +28,7 @@ public class ReviiewList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review_list);
         Firebase.setAndroidContext(this);
-        Firebase ref = new Firebase("https://review-1212123.firebaseio.com/ChefReview/Monica/user/");
+        Firebase ref = new Firebase("https://app-etite.firebaseio.com/chefReview/Monica/UserReviews/");
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -75,24 +75,6 @@ public class ReviiewList extends AppCompatActivity {
         });
 
     }
-    private void query(String chefName ) {
-        SQLiteDatabase db = new ReviewDbHelper(this).getWritableDatabase();
-        String where = ReviewDbHelper.CHEF_COLUMN + "=?";
-        String[] whereArgs ={chefName} ;
-        String groupBy = null;
-        String having = null;
-        String order = null;
-        String[] resultColumns = {ReviewDbHelper.ID_COLUMN,ReviewDbHelper.CHEF_COLUMN, ReviewDbHelper.USER_COLUMN,ReviewDbHelper.REVIEW_COLUMN,ReviewDbHelper.RATING_COLUMN,ReviewDbHelper.DATE_COLUMN};
-        Cursor cursor = db.query(ReviewDbHelper.DATABASE_TABLE, resultColumns, where, whereArgs, groupBy, having, order);
-        while (cursor.moveToNext()) {
-            int id = cursor.getInt(0);
-            // String chef = cursor.getString(1);
-            String user = cursor.getString(2);
-            String review = cursor.getString(3);
-            String rating = cursor.getString(4);
-            String date = cursor.getString(5);
-            cap.add(new Reviews(user,review,rating,date));
-        }
-    }
+
 
 }

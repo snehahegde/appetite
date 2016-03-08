@@ -7,12 +7,14 @@ public class Menu {
     private String itemPrice;
     private String itemImg;
     private String itemName;
+    private String itemCuisine;
 
     public Menu(){}
-    public Menu(String itemName,String itemPrice,String itemImg) {
+    public Menu(String itemName,String itemPrice,String itemImg,String itemCuisine) {
         this.itemPrice = itemPrice;
         this.itemImg = itemImg;
         this.itemName = itemName;
+        this.itemCuisine = itemCuisine;
     }
 
 
@@ -26,6 +28,9 @@ public class Menu {
 
     public String getItemName() {
         return itemName;
+    }
+    public String getItemCuisine() {
+        return itemCuisine;
     }
 
 

@@ -200,7 +200,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             userName = acct.getDisplayName();
             email = acct.getEmail();
             photoUrl = acct.getPhotoUrl();
-
+            System.out.println(userName);
             if(MainActivity.cookModule) {
                 chefRef = new Firebase("https://app-etite.firebaseio.com/userInfo/chef");
 

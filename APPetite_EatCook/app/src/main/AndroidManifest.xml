@@ -5,6 +5,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+
 
     <application
         android:allowBackup="true"
@@ -37,19 +39,12 @@
         <activity android:name=".ReviiewList" />
         <activity android:name=".AddReviewActivity" />
         <activity
-            android:name=".Menu"
-            android:label="@string/title_activity_menu" />
-        <activity
             android:name=".ChefMenuItemActivity"
             android:label="@string/title_activity_chef_menu_item"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ChefMenulist"
             android:label="@string/title_activity_chef_menulist" />
-        <activity
-            android:name=".ChefMenulistAdapter"
-            android:label="@string/title_activity_chef_menulist_adapter"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ChefMenuInfo"
             android:label="@string/title_activity_chef_menu_info"
@@ -64,12 +59,11 @@
             android:name=".ChefsEnrolledActivity"
             android:label="@string/title_activity_chefs_enrolled" />
         <activity
-            android:name=".ChefsEnrolledListAdapter"
-            android:label="@string/title_activity_chefs_enrolled_list_adapter" />
-        <activity
             android:name=".DishDetailsActivity"
-            android:label="@string/title_activity_dish_details"
-            ></activity>
+            android:label="@string/title_activity_dish_details" />
+        <activity
+            android:name=".ReviewsCookModuleActivity"
+            android:label="@string/title_activity_reviews_cook_module"></activity>
     </application>
 
 </manifest>

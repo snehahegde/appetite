@@ -9,6 +9,10 @@
     <string name="title_activity_menu">Menu</string>
     <string name="eat_button">Eat</string>
     <string name="cook_button">Cook</string>
+    <string name="action_profile">Profile</string>
+    <string name="action_home">Home</string>
+    <string name="action_logOut">Log Out</string>
+    <string name="action_reviews">Reviews</string>
     <string name="title_activity_chef_menu_item">Chef_menuItem</string>
     <string name="title_activity_chef_menulist">ChefMenulist</string>
     <string name="title_activity_chef_menulist_adapter">ChefMenulistAdapter</string>
@@ -18,4 +22,5 @@
     <string name="title_activity_chef_profile">ChefProfile</string>
     <string name="title_activity_chefs_enrolled_list_adapter">ChefsEnrolledListAdapter</string>
     <string name="title_activity_dish_details">DishDetailsActivity</string>
+    <string name="title_activity_reviews_cook_module">ReviewsCookModuleActivity</string>
 </resources>

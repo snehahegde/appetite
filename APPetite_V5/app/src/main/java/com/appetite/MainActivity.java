@@ -1,6 +1,7 @@
 package com.appetite;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -19,7 +20,8 @@ import org.w3c.dom.Text;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
 
-    ImageButton bEat,bCook;
+    Button bEat,bCook;
+    TextView appTitle;
     public static boolean cookModule = false;
     public static boolean eatModule = false;
 
@@ -28,10 +30,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        bEat = (ImageButton) findViewById(R.id.bEat);
+        appTitle=(TextView)findViewById(R.id.title);
+        appTitle.setTextColor(Color.parseColor("#FFFFFF"));
+        bEat = (Button) findViewById(R.id.bEat);
+        bEat.setTextColor(Color.parseColor("#FFFFFF"));
         //bEat.setBackgroundColor(0xFFFFB300);
-        bCook = (ImageButton) findViewById(R.id.bCook);
+        bCook = (Button) findViewById(R.id.bCook);
+        bCook.setTextColor(Color.parseColor("#FFFFFF"));
        // bCook.setBackgroundColor(0xFFFFB300);
 
         bEat.setOnClickListener(this);

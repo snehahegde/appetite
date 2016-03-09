@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.appetite">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <uses-library android:name="com.google.android.maps" />
+
+    <meta-data
+        android:name="com.google.android.gms.version"
+        android:value="@integer/google_play_services_version" />
+    <meta-data
+        android:name="com.google.android.geo.API_KEY"
+        android:value="@string/google_maps_key" />
+
+    <!-- Allow to connect with internet -->
+
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Login"
+            android:label="@string/title_activity_login" />
+        <activity
+            android:name=".ChefRegister"
+            android:label="@string/title_activity_register" />
+        <activity
+            android:name=".MenuList"
+            android:label="@string/title_activity_menulist" />
+        <activity android:name=".ReviiewList" />
+        <activity android:name=".AddReviewActivity" />
+        <activity
+            android:name=".ChefMenuItemActivity"
+            android:label="@string/title_activity_chef_menu_item"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ChefMenulist"
+            android:label="@string/title_activity_chef_menulist" />
+        <activity
+            android:name=".ChefMenuInfo"
+            android:label="@string/title_activity_chef_menu_info"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CustomerRegister"
+            android:label="@string/title_activity_customer_register" />
+        <activity
+            android:name=".ChefProfile"
+            android:label="@string/title_activity_chef_profile" />
+        <activity
+            android:name=".ChefsEnrolledActivity"
+            android:label="@string/title_activity_chefs_enrolled" />
+        <activity
+            android:name=".DishDetailsActivity"
+            android:label="@string/title_activity_dish_details" />
+        <activity
+            android:name=".ReviewsCookModuleActivity"
+            android:label="@string/title_activity_reviews_cook_module" />
+        <activity
+            android:name=".MapActivity"
+            android:label="@string/title_activity_map"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <!-- <activity -->
+        <!-- android:name=".MapActivityFragment" -->
+        <!-- android:label="@string/title_activity_map_activity_fragment" -->
+        <!-- android:theme="@style/AppTheme.NoActionBar"></activity> -->
+        <activity
+            android:name=".ChefUserMapActivity"
+            android:label="@string/title_activity_chef_user_map"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+    </application>
+
+</manifest>

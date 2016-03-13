@@ -10,8 +10,13 @@
 
     <style name="foodRatingBar" parent="@android:style/Widget.RatingBar">
         <item name="android:progressDrawable">@drawable/food_ratingbar_full</item>
-        <item name="android:minHeight">48dip</item>
-        <item name="android:maxHeight">48dip</item>
+        <item name="android:minHeight">40dip</item>
+        <item name="android:maxHeight">40dip</item>
+    </style>
+    <style name="foodRatingBarForAddRev" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/food_ratingbar_full_addrev</item>
+        <item name="android:minHeight">20dip</item>
+        <item name="android:maxHeight">20dip</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

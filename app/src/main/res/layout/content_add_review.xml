@@ -23,10 +23,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Rate the Chef"
+            android:text="Rate your Chef"
             android:id="@+id/title"
-            android:textSize="25dp"
+            android:textSize="20dp"
             android:textStyle="bold"
+            android:textColor="#AD3232"
             android:padding="10dp"
             android:layout_gravity="center_horizontal" />
 
@@ -40,6 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
+                android:textColor="#AD3232"
                 android:textSize="18dp"
                 android:text="Rating : "
                 android:id="@+id/ratingText" />
@@ -47,9 +49,7 @@
             <RatingBar
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 style="@style/foodRatingBar"
-
                 android:id="@+id/ratingBar" />
 
 
@@ -64,6 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Review : "
+                android:textColor="#AD3232"
                 android:textStyle="bold"
                 android:textSize="18dp"
                 android:id="@+id/reviewText" />
@@ -79,7 +80,10 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="SUBMIT"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/image_bg"
             android:id="@+id/button" />
 
 

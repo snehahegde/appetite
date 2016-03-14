@@ -38,4 +38,7 @@ dependencies {
     compile 'com.google.android.gms:play-services-maps:8.4.0'
     compile 'com.google.android.gms:play-services-location:8.4.0'
     compile 'com.google.maps.android:android-maps-utils:0.4.+'
+    compile files('libs/dropbox-android-sdk-1.6.3.jar')
+
 }
+apply plugin: 'com.google.gms.google-services'

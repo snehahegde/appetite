@@ -23,6 +23,12 @@
         android:textSize="20dp"
         android:text="item_name"
         android:id="@+id/view_itemName"/>
+
+        <ImageButton
+            android:id="@+id/camera_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_camera_enhance_black_24dp" />
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -63,12 +69,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <!--<ImageButton-->
-                <!--android:id="@+id/camera_button"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:src="@drawable/ic_camera_enhance_black_24dp"-->
-                <!--/>-->
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -24,7 +24,7 @@
     <string name="title_activity_chefs_enrolled_list_adapter">ChefsEnrolledListAdapter</string>
     <string name="title_activity_dish_details">DishDetailsActivity</string>
     <string name="title_activity_reviews_cook_module">ReviewsCookModuleActivity</string>
-    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyDY2ahmNycy55FKVxgPbFhQRNz8Ql7A2zw</string>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyA8l95ph-xa3SV3V-FTVpCdnI-rivInuGk</string>
     <string name="title_activity_map">MapActivity</string>
     <string name="title_activity_chef_users_map">ChefUsersMapActivity</string>
 </resources>

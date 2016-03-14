@@ -1,6 +1,9 @@
 package com.appetite;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,6 +15,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.dropbox.client2.DropboxAPI;
+import com.dropbox.client2.android.AndroidAuthSession;
+import com.dropbox.client2.exception.DropboxException;
+import com.dropbox.client2.session.AppKeyPair;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -22,6 +29,8 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class ChefMenuInfo extends AppCompatActivity {
@@ -31,10 +40,20 @@ public class ChefMenuInfo extends AppCompatActivity {
     Firebase mRef;
     String qOrdered,chefMenus,quantity,ingredients,chef_menu;
     public GoogleApiClient mGoogleApiClient;
+    private DropboxAPI<AndroidAuthSession> mDBApi;
+    final static private String APP_KEY = "ya6xzn1c4rjsjdu";
+    final static private String APP_SECRET = "tka1puxynswkeek";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chef_menu_info);
+
+        AppKeyPair keyPair = new AppKeyPair(APP_KEY, APP_SECRET);
+        AndroidAuthSession session =
+                new AndroidAuthSession(keyPair,
+                        "bu-o0D7UlrAAAAAAAAAACqbhdtpfpEG8J1_KrFJWnCLfyxlnJ8q_44LSiXkk1yig");
+        mDBApi = new DropboxAPI<AndroidAuthSession>(session);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -56,7 +75,7 @@ public class ChefMenuInfo extends AppCompatActivity {
         mRef.addValueEventListener(new ValueEventListener() {
 
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(final DataSnapshot dataSnapshot) {
                 if(dataSnapshot.child("quantity").getValue()!=null & dataSnapshot.child("ingredients").getValue()!=null) {
                     System.out.println("987654321 : " + "retrieving quantity ordered and remaining quantity from chefMenuInfo class");
                     quantity = dataSnapshot.child("quantity").getValue().toString();
@@ -76,10 +95,45 @@ public class ChefMenuInfo extends AppCompatActivity {
 
                     menuQuantityOrdered = (TextView) findViewById(R.id.view_quantityOrdered);
                     menuQuantityOrdered.setText(qOrdered);
+
+                    cheffMenuImg = (ImageView)findViewById(R.id.chef_menuImg);
+                    //cheffMenuImg.setImageResource(R.drawable.salmon_slaw);
+
+                    AsyncTask<String,Void, ByteArrayOutputStream> downloadHandler = new AsyncTask<String,Void,ByteArrayOutputStream>() {
+
+                        @Override
+                        protected ByteArrayOutputStream doInBackground(String... params) {
+
+                            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                            try {
+                                if( dataSnapshot.child("foodImg").getValue().toString() != null ) {
+                                    DropboxAPI.DropboxFileInfo info = mDBApi.getFile(dataSnapshot.child("foodImg").getValue().toString(), null, byteArrayOutputStream, null);
+                                }
+                            } catch (DropboxException e) {
+                                e.printStackTrace();
+                            } finally {
+                                try {
+                                    byteArrayOutputStream.close();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            return byteArrayOutputStream;
+                        }
+
+                        @Override
+                        protected void onPostExecute(ByteArrayOutputStream outputStream) {
+                            byte[] outputArray= outputStream.toByteArray();
+                            Bitmap bitmap = BitmapFactory.decodeByteArray(outputArray, 0, outputArray.length);
+                            cheffMenuImg.setImageBitmap(bitmap);
+                        }
+                    };
+
+                    downloadHandler.execute();
+
                 }
+            };
 
-
-            }
 
 
             @Override
@@ -89,8 +143,7 @@ public class ChefMenuInfo extends AppCompatActivity {
             }
         });
 
-        cheffMenuImg = (ImageView)findViewById(R.id.chef_menuImg);
-        cheffMenuImg.setImageResource(R.drawable.salmon_slaw);
+
 
 
     }

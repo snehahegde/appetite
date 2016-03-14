@@ -16,9 +16,10 @@ public class ChefMenuItem {
 
     public ChefMenuItem(){}
 
-    public ChefMenuItem(String ingredients,int quantity){
+    public ChefMenuItem(String ingredients,int quantity,String imagePath){
         this.ingredients = ingredients;
         this.quantity = quantity;
+        this.foodImg = imagePath;
 
     }
 

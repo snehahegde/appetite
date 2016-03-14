@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -20,26 +21,24 @@ import org.w3c.dom.Text;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
 
-    Button bEat,bCook;
+    ImageView bEat;
+    ImageView bCook;
     TextView appTitle;
     public static boolean cookModule = false;
     public static boolean eatModule = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_main);
 
         appTitle=(TextView)findViewById(R.id.title);
         appTitle.setTextColor(Color.parseColor("#FFFFFF"));
-        bEat = (Button) findViewById(R.id.bEat);
-        bEat.setTextColor(Color.parseColor("#FFFFFF"));
-        //bEat.setBackgroundColor(0xFFFFB300);
-        bCook = (Button) findViewById(R.id.bCook);
-        bCook.setTextColor(Color.parseColor("#FFFFFF"));
-        // bCook.setBackgroundColor(0xFFFFB300);
+        bEat = (ImageView) findViewById(R.id.bEat);
 
+        bCook = (ImageView) findViewById(R.id.bCook);
         bEat.setOnClickListener(this);
         bCook.setOnClickListener(this);
 

@@ -1,5 +1,9 @@
 package com.appetite;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -33,7 +37,7 @@ public class MenuList extends AppCompatActivity {
 
     TextView welcometxt;
     TextView item_name, item_price;
-    Firebase mRef,menuRef;
+    Firebase mRef,menuRef,mRef1;
     ImageView image;
     String imageEncoded;
     ListView menulistView;
@@ -42,9 +46,12 @@ public class MenuList extends AppCompatActivity {
     String searchDish;
     EditText searchWord;
     MenulistAdapter menuListAdapter;
+    String chef,dish,quan,cust;
+    static boolean orderPage=false;
     Login signOut;
     public GoogleApiClient mGoogleApiClient;
     String itemName,itemPrice,itemImage,itemCuisine;
+    int count=0;
     Menu menuItems;
 
     @Override
@@ -101,7 +108,51 @@ public class MenuList extends AppCompatActivity {
 
             }
         });
+        mRef1 = new Firebase("https://app-etite.firebaseio.com/orders");
+        mRef1.addValueEventListener(new ValueEventListener() {
 
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                chef = dataSnapshot.child("chef").getValue().toString();
+                cust = dataSnapshot.child("customer").getValue().toString();
+                dish = dataSnapshot.child("dish").getValue().toString();
+                quan = dataSnapshot.child("quantity").getValue().toString();
+                count++;
+                if (Login.userName.equals(chef)&count>1 ) {
+                    notifyChef();
+                    orderPage=true;
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                Log.d("The read failed: ", firebaseError.getMessage());
+
+            }
+        });
+
+
+    }
+    public void notifyChef(){
+        int requestCode = 0;
+        int flags = 0;
+        Intent i = new Intent(this,ChefMenuInfo.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(
+                this, requestCode, i, flags);
+        int id = 12345;
+        Notification notification = new Notification.Builder(this)
+                .setContentTitle("New Order!")
+                .setContentText("You have received an order from "+cust+"for "+dish)
+                .setSmallIcon(android.R.drawable.ic_dialog_alert)
+                .setContentIntent(pendingIntent)
+                .setPriority(Notification.PRIORITY_MAX)
+                .setVibrate(new long[0])
+                .build();
+        notification.flags = Notification.DEFAULT_LIGHTS | Notification.FLAG_AUTO_CANCEL;
+        NotificationManager notificationManager = (NotificationManager) this.getSystemService(
+                Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(id, notification);
     }
     public void menuList(){
 

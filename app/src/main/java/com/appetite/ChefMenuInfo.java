@@ -12,8 +12,10 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dropbox.client2.DropboxAPI;
 import com.dropbox.client2.android.AndroidAuthSession;
@@ -36,8 +38,11 @@ import java.util.ArrayList;
 public class ChefMenuInfo extends AppCompatActivity {
 
     TextView menuName,menuIngredients,menuQuantity,menuQuantityOrdered;
-    ImageView cheffMenuImg;
-    Firebase mRef;
+    TextView dishName,dishIngre,dishQuan,quanOrdered;
+    ImageView cheffMenuImg,foodImg;
+    Firebase mRef,mRef2;
+    String customer,status;
+    Button doneBtn;
     String qOrdered,chefMenus,quantity,ingredients,chef_menu;
     public GoogleApiClient mGoogleApiClient;
     private DropboxAPI<AndroidAuthSession> mDBApi;
@@ -47,7 +52,14 @@ public class ChefMenuInfo extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chef_menu_info);
+        if(MenuList.orderPage){
+        setContentView(R.layout.order_page);
+        }
+                else{
+            setContentView(R.layout.activity_chef_menu_info);
+            }
+
+
 
         AppKeyPair keyPair = new AppKeyPair(APP_KEY, APP_SECRET);
         AndroidAuthSession session =
@@ -66,11 +78,29 @@ public class ChefMenuInfo extends AppCompatActivity {
         String chefName = Login.userName;
         Bundle bundle = getIntent().getExtras();
         chef_menu = bundle.getString("menu_name");
-        menuName = (TextView) findViewById(R.id.chef_menu);
-        menuName.setText(chef_menu);
+        if(MenuList.orderPage){
+            dishName= (TextView) findViewById(R.id.dish);
+            dishName.setText(chef_menu);
+            doneBtn=(Button)findViewById(R.id.doneButton);
+            doneBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    quanOrdered.setText("0");
+                    MenuList.orderPage = false;
+                    Toast.makeText(getBaseContext(), "Customer is notified", Toast.LENGTH_LONG).show();
+                    notifyTheUsers();
+                }
+            });
+
+        }else{
+            menuName = (TextView) findViewById(R.id.chef_menu);
+            menuName.setText(chef_menu);
+        }
+
+
 
         System.out.println("ChefNaMe: " + chefName + " " + "ChefMeNu: " + chef_menu);
-        mRef = new Firebase("https://app-etite.firebaseio.com/" + chefName + "/" + chef_menu);
+        mRef = new Firebase("https://app-etite.firebaseio.com/" + chefName + "/" + chef_menu+"/");
 
         mRef.addValueEventListener(new ValueEventListener() {
 
@@ -86,17 +116,29 @@ public class ChefMenuInfo extends AppCompatActivity {
                         qOrdered = dataSnapshot.child("quantityOrdered").getValue().toString();
                     }
                     System.out.println("Quan: " + quantity + " " + "Ing: " + ingredients + " " + "Orders: " + qOrdered);
+                    if(MenuList.orderPage){
+                    dishIngre = (TextView) findViewById(R.id.ingre);
+                    dishIngre.setText(ingredients);
 
-                    menuIngredients = (TextView) findViewById(R.id.view_ingredients);
-                    menuIngredients.setText(ingredients);
+                        dishQuan= (TextView) findViewById(R.id.available);
+                    dishQuan.setText(quantity);
 
-                    menuQuantity = (TextView) findViewById(R.id.view_quantity);
-                    menuQuantity.setText(quantity);
+                    quanOrdered = (TextView) findViewById(R.id.ordered);
+                    quanOrdered.setText(qOrdered);
 
-                    menuQuantityOrdered = (TextView) findViewById(R.id.view_quantityOrdered);
-                    menuQuantityOrdered.setText(qOrdered);
+                    foodImg = (ImageView)findViewById(R.id.chef_foodImg);}
+                    else{
+                        menuIngredients = (TextView) findViewById(R.id.view_ingredients);
+                        menuIngredients.setText(ingredients);
 
-                    cheffMenuImg = (ImageView)findViewById(R.id.chef_menuImg);
+                        menuQuantity = (TextView) findViewById(R.id.view_quantity);
+                        menuQuantity.setText(quantity);
+
+                        menuQuantityOrdered = (TextView) findViewById(R.id.view_quantityOrdered);
+                        menuQuantityOrdered.setText(qOrdered);
+
+                        cheffMenuImg = (ImageView)findViewById(R.id.chef_menuImg);
+                    }
                     //cheffMenuImg.setImageResource(R.drawable.salmon_slaw);
 
                     AsyncTask<String,Void, ByteArrayOutputStream> downloadHandler = new AsyncTask<String,Void,ByteArrayOutputStream>() {
@@ -125,7 +167,11 @@ public class ChefMenuInfo extends AppCompatActivity {
                         protected void onPostExecute(ByteArrayOutputStream outputStream) {
                             byte[] outputArray= outputStream.toByteArray();
                             Bitmap bitmap = BitmapFactory.decodeByteArray(outputArray, 0, outputArray.length);
-                            cheffMenuImg.setImageBitmap(bitmap);
+                            if(MenuList.orderPage){
+                                foodImg.setImageBitmap(bitmap);
+                            }else
+                            {
+                            cheffMenuImg.setImageBitmap(bitmap);}
                         }
                     };
 
@@ -206,6 +252,9 @@ public class ChefMenuInfo extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         mGoogleApiClient.disconnect();
+    }
+    protected void notifyTheUsers(){
+
     }
 
 }

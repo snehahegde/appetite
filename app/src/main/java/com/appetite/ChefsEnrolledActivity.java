@@ -66,7 +66,6 @@ public class ChefsEnrolledActivity extends AppCompatActivity {
                             if(chefs_enrolled!=null){
                             chef_ingredients = dataSnapshot.child(chefs_enrolled).child(chef_menu).child("ingredients").getValue().toString();
                             quantity_avbl = dataSnapshot.child(chefs_enrolled).child(chef_menu).child("quantity").getValue().toString();
-
                                 chefMenuDetails = new ChefMenuDetails(chef_ingredients, quantity_avbl);
                                 chefMenuDetailsMap.put(chefs_enrolled, chefMenuDetails);
                             System.out.println("Chef_details: " + chefs_enrolled + " " + chef_ingredients + " " + quantity_avbl);

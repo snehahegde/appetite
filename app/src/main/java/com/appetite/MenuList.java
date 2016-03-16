@@ -119,6 +119,7 @@ public class MenuList extends AppCompatActivity {
                 dish = dataSnapshot.child("dish").getValue().toString();
                 quan = dataSnapshot.child("quantity").getValue().toString();
                 count++;
+                Log.d("COUNT++:",Login.userName+",count = "+count);
                 if (Login.userName.equals(chef)&count>1 ) {
                     notifyChef();
                     orderPage=true;
@@ -138,12 +139,14 @@ public class MenuList extends AppCompatActivity {
         int requestCode = 0;
         int flags = 0;
         Intent i = new Intent(this,ChefMenuInfo.class);
+
+        i.putExtra("menuname",dish);
         PendingIntent pendingIntent = PendingIntent.getActivity(
-                this, requestCode, i, flags);
+                this, requestCode, i, PendingIntent.FLAG_UPDATE_CURRENT);
         int id = 12345;
         Notification notification = new Notification.Builder(this)
                 .setContentTitle("New Order!")
-                .setContentText("You have received an order from "+cust+"for "+dish)
+                .setContentText("Order from "+cust+"for "+dish)
                 .setSmallIcon(android.R.drawable.ic_dialog_alert)
                 .setContentIntent(pendingIntent)
                 .setPriority(Notification.PRIORITY_MAX)

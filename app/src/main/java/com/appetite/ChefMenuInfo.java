@@ -43,7 +43,7 @@ public class ChefMenuInfo extends AppCompatActivity {
     Firebase mRef,mRef2;
     String customer,status;
     Button doneBtn;
-    String qOrdered,chefMenus,quantity,ingredients,chef_menu;
+    String qOrdered,chefMenus,quantity,ingredients,chef_menu,chefmenu;
     public GoogleApiClient mGoogleApiClient;
     private DropboxAPI<AndroidAuthSession> mDBApi;
     final static private String APP_KEY = "ya6xzn1c4rjsjdu";
@@ -54,6 +54,9 @@ public class ChefMenuInfo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         if(MenuList.orderPage){
         setContentView(R.layout.order_page);
+            //Bundle bundle = getIntent().getExtras();
+            chefmenu=(String)this.getIntent().getStringExtra("menuname");
+            System.out.println("DISH NAME FROM MENULIST : "+chefmenu);
         }
                 else{
             setContentView(R.layout.activity_chef_menu_info);
@@ -76,11 +79,10 @@ public class ChefMenuInfo extends AppCompatActivity {
                 .build();
 
         String chefName = Login.userName;
-        Bundle bundle = getIntent().getExtras();
-        chef_menu = bundle.getString("menu_name");
         if(MenuList.orderPage){
+            chef_menu=chefmenu;
             dishName= (TextView) findViewById(R.id.dish);
-            dishName.setText(chef_menu);
+            dishName.setText(chefmenu);
             doneBtn=(Button)findViewById(R.id.doneButton);
             doneBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -91,14 +93,14 @@ public class ChefMenuInfo extends AppCompatActivity {
                     notifyTheUsers();
                 }
             });
-
-        }else{
+        }
+        else{
+            Bundle bundle = getIntent().getExtras();
+            chef_menu = bundle.getString("menu_name");
             menuName = (TextView) findViewById(R.id.chef_menu);
             menuName.setText(chef_menu);
         }
-
-
-
+        
         System.out.println("ChefNaMe: " + chefName + " " + "ChefMeNu: " + chef_menu);
         mRef = new Firebase("https://app-etite.firebaseio.com/" + chefName + "/" + chef_menu+"/");
 

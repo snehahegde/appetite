@@ -24,8 +24,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ImageView bEat;
     ImageView bCook;
     TextView appTitle;
-    ImageView bEat;
-    ImageView bCook;
     public static boolean cookModule = false;
     public static boolean eatModule = false;
 

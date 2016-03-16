@@ -1,6 +1,7 @@
 package com.appetite;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -28,6 +29,7 @@ public class ChefsEnrolledActivity extends AppCompatActivity {
 
     Firebase mRef, picRef;
     TextView itemName;
+    TextView topLabel;
     String chef_menu,chefs_enrolled,chef_ingredients,quantity_avbl;
     List<ChefsEnrolledList> chefsEnrolledDetails;
     Map<String,ChefMenuDetails>  chefMenuDetailsMap = new HashMap<String, ChefMenuDetails>();
@@ -40,11 +42,17 @@ public class ChefsEnrolledActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chefs_enrolled);
 
+
+
         chefsEnrolledDetails = new ArrayList<ChefsEnrolledList>();
 //        itemName = (TextView) findViewById(R.id.tv_menuName);
         Bundle bundle = getIntent().getExtras();
         chef_menu = bundle.getString("menuName");
         System.out.println("MENU: " + chef_menu);
+
+        topLabel = (TextView)findViewById(R.id.chefsEnrolledLabel);
+        topLabel.setText("Your chefs' for " + chef_menu + "!");
+
 //        itemName.setText(chef_menu);
         Firebase.setAndroidContext(this);
         mRef = new Firebase("https://app-etite.firebaseio.com");

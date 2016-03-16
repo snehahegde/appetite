@@ -21,6 +21,8 @@ import org.w3c.dom.Text;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
 
+    ImageView bEat;
+    ImageView bCook;
     TextView appTitle;
     ImageView bEat;
     ImageView bCook;
@@ -29,9 +31,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_main);
 
         appTitle=(TextView)findViewById(R.id.title);
         appTitle.setTextColor(Color.parseColor("#FFFFFF"));

@@ -37,9 +37,9 @@ public class MenuList extends AppCompatActivity {
 
     TextView welcometxt;
     TextView item_name, item_price;
-    Firebase mRef,menuRef,mRef1;
+    Firebase mRef,menuRef,mRef1,mRef2;
     ImageView image;
-    String imageEncoded;
+    String user,status;
     ListView menulistView;
     List<Menu> menuList;
     ImageButton searchBtn;
@@ -52,6 +52,7 @@ public class MenuList extends AppCompatActivity {
     public GoogleApiClient mGoogleApiClient;
     String itemName,itemPrice,itemImage,itemCuisine;
     int count=0;
+    int counts=0;
     Menu menuItems;
 
     @Override
@@ -132,8 +133,27 @@ public class MenuList extends AppCompatActivity {
 
             }
         });
+        mRef2 = new Firebase("https://app-etite.firebaseio.com/notifyUsers/");
+        mRef2.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                user = dataSnapshot.child("user").getValue().toString();
+                status = dataSnapshot.child("orderStatus").getValue().toString();
+                counts++;
+                Log.d("COUNTS++:",Login.userName+",count = "+counts);
+                if (Login.userName.equals(user)&counts>1 ) {
+                    notifyUser();
+                }
+            }
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
 
 
+        });
     }
     public void notifyChef(){
         int requestCode = 0;
@@ -141,6 +161,7 @@ public class MenuList extends AppCompatActivity {
         Intent i = new Intent(this,ChefMenuInfo.class);
 
         i.putExtra("menuname",dish);
+        i.putExtra("user", Login.userName);
         PendingIntent pendingIntent = PendingIntent.getActivity(
                 this, requestCode, i, PendingIntent.FLAG_UPDATE_CURRENT);
         int id = 12345;
@@ -201,7 +222,27 @@ public class MenuList extends AppCompatActivity {
         });
 
     }
-
+    public void notifyUser(){
+        int requestCode = 0;
+        Intent i = new Intent(this,ChefMenuInfo.class);
+        //i.putExtra("menuname",dish);
+        //i.putExtra("user",Login.userName);
+        PendingIntent pendingIntent = PendingIntent.getActivity(
+                this, requestCode, i, PendingIntent.FLAG_UPDATE_CURRENT);
+        int id = 12345;
+        Notification notification = new Notification.Builder(this)
+                .setContentTitle("Order Ready!")
+                .setContentText("Your order is ready for pick up.")
+                .setSmallIcon(android.R.drawable.ic_dialog_alert)
+                .setContentIntent(pendingIntent)
+                .setPriority(Notification.PRIORITY_MAX)
+                .setVibrate(new long[0])
+                .build();
+        notification.flags = Notification.DEFAULT_LIGHTS | Notification.FLAG_AUTO_CANCEL;
+        NotificationManager notificationManager = (NotificationManager) this.getSystemService(
+                Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(id, notification);
+    }
     public void searchContent(String word){
         searchDish=word;
         menuList.clear();

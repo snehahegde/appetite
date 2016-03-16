@@ -38,7 +38,7 @@ public class DishInfoFrag extends Fragment {
     EditText quantityInput;
     String quantityOrdered, chefName, chef,dish,quan;
     Button orderButton;
-    Firebase mRef,mRef1;
+    Firebase mRef,mRef1,mRef2;
     int remainingQuantity = 0;
 
     @Override
@@ -70,52 +70,18 @@ public class DishInfoFrag extends Fragment {
     public void placeOrder() {
         quantityOrdered = quantityInput.getText().toString();
         remainingQuantity = Integer.parseInt(DishDetailsActivity.chefDishQuantity) - Integer.parseInt(quantityOrdered);
+        showAlertDialog();
         chefQuantity.setText(String.valueOf(remainingQuantity));
         Firebase.setAndroidContext(getContext());
-
         mRef = new Firebase("https://app-etite.firebaseio.com/" + DishDetailsActivity.chefName);
-
         Map<String, Object> quantityOrderedMap = new HashMap<String, Object>();
         quantityOrderedMap.put(DishDetailsActivity.chefDishName + "/quantityOrdered", quantityOrdered);
         System.out.println("Testing" + DishDetailsActivity.chefName);
         quantityOrderedMap.put(DishDetailsActivity.chefDishName + "/quantity", String.valueOf(remainingQuantity));
         mRef.updateChildren(quantityOrderedMap);
+        mRef2 = new Firebase("https://app-etite.firebaseio.com/notifyUsers/");
+        mRef2.child("user").setValue(Login.userName);
 
-        mRef1 = new Firebase("https://app-etite.firebaseio.com/orders/");
-        Map<String, Object> orders = new HashMap<String, Object>();
-        orders.put("chef", DishDetailsActivity.chefName);
-        orders.put("customer", Login.userName);
-        orders.put("dish", DishDetailsActivity.chefDishName);
-        orders.put("quantity", quantityOrdered);
-        mRef1.updateChildren(orders);
-        showAlertDialog();
-        mRef1 = new Firebase("https://app-etite.firebaseio.com/orders");
-//        mRef1.addValueEventListener(new ValueEventListener() {
-//
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                System.out.println("Testing:Ondatachange called");
-//
-//                //for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-//                System.out.println("Testing:inside for loop");
-//
-//                // if (postSnapshot.child("chef").getValue() != null && postSnapshot.child("dish") != null && postSnapshot.child("quantity") != null) {
-//                chef = dataSnapshot.child("chef").getValue().toString();
-//                System.out.println("Testing chef value" + dataSnapshot.child("chef").getValue().toString());
-//                dish = dataSnapshot.child("dish").getValue().toString();
-//                quan = dataSnapshot.child("quantity").getValue().toString();
-//                System.out.println("Notify Testing : " + chef + " " + Login.userName);
-//                if (Login.userName.equals(chef)) {
-//                    notifyChef();
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(FirebaseError firebaseError) {
-//                Log.d("The read failed: ", firebaseError.getMessage());
-//
-//            }
- //       });
     }
 
     public void showAlertDialog() {
@@ -126,8 +92,14 @@ public class DishInfoFrag extends Fragment {
         alertDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
-
+                mRef1 = new Firebase("https://app-etite.firebaseio.com/orders/");
+                Map<String, Object> orders = new HashMap<String, Object>();
+                orders.put("chef", DishDetailsActivity.chefName);
+                orders.put("customer", Login.userName);
+                orders.put("dish", DishDetailsActivity.chefDishName);
+                orders.put("quantity", quantityOrdered);
+                mRef1.updateChildren(orders);
+                mRef1 = new Firebase("https://app-etite.firebaseio.com/orders");
 //                SmsManager smsMngr = SmsManager.getDefault();
 //                smsMngr.sendTextMessage("+4088932829", null, "You have received and order from " + Login.userName + " for" + quantityInput + " " + DishDetailsActivity.chefDishName + ".", null, null);
                 Toast.makeText(getActivity(), "Order placed!You will be notified about the pick up time shortly.", Toast.LENGTH_LONG).show();

@@ -34,6 +34,8 @@ import com.google.android.gms.common.api.Status;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ChefMenuInfo extends AppCompatActivity {
 
@@ -56,7 +58,8 @@ public class ChefMenuInfo extends AppCompatActivity {
         setContentView(R.layout.order_page);
             //Bundle bundle = getIntent().getExtras();
             chefmenu=(String)this.getIntent().getStringExtra("menuname");
-            System.out.println("DISH NAME FROM MENULIST : "+chefmenu);
+            customer=(String)this.getIntent().getStringExtra("user");
+            //System.out.println("Customer who ordered : "+customer);
         }
                 else{
             setContentView(R.layout.activity_chef_menu_info);
@@ -90,7 +93,7 @@ public class ChefMenuInfo extends AppCompatActivity {
                     quanOrdered.setText("0");
                     MenuList.orderPage = false;
                     Toast.makeText(getBaseContext(), "Customer is notified", Toast.LENGTH_LONG).show();
-                    notifyTheUsers();
+                    updateStatus();
                 }
             });
         }
@@ -100,7 +103,7 @@ public class ChefMenuInfo extends AppCompatActivity {
             menuName = (TextView) findViewById(R.id.chef_menu);
             menuName.setText(chef_menu);
         }
-        
+
         System.out.println("ChefNaMe: " + chefName + " " + "ChefMeNu: " + chef_menu);
         mRef = new Firebase("https://app-etite.firebaseio.com/" + chefName + "/" + chef_menu+"/");
 
@@ -255,7 +258,12 @@ public class ChefMenuInfo extends AppCompatActivity {
         super.onStop();
         mGoogleApiClient.disconnect();
     }
-    protected void notifyTheUsers(){
+    protected void updateStatus(){
+        mRef2 = new Firebase("https://app-etite.firebaseio.com/notifyUsers/");
+        Map<String, Object> orders = new HashMap<String, Object>();
+        orders.put("orderStatus","ready");
+       // orders.put("user",customer );
+        mRef2.updateChildren(orders);
 
     }
 

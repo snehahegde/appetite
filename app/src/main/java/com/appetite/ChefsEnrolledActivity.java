@@ -33,7 +33,7 @@ public class ChefsEnrolledActivity extends AppCompatActivity {
     String chef_menu,chefs_enrolled,chef_ingredients,quantity_avbl;
     List<ChefsEnrolledList> chefsEnrolledDetails;
     Map<String,ChefMenuDetails>  chefMenuDetailsMap = new HashMap<String, ChefMenuDetails>();
-    ChefMenuDetails chefMenuDetails;
+    //ChefMenuDetails chefMenuDetails;
     ListView chefsEnrolledlistView;
     ChefsEnrolledListAdapter chefsEnrolledListAdapter;
     String key;
@@ -72,9 +72,16 @@ public class ChefsEnrolledActivity extends AppCompatActivity {
 //                        quantity_avbl = dataSnapshot.child(chefs_enrolled).child(chef_menu).child("quantity").getValue().toString();
 //                        if(dataSnapshot.child(chefs_enrolled).child(chef_menu).child("ingredients").getValue().toString()!=null && dataSnapshot.child(chefs_enrolled).child(chef_menu).child("quantity").getValue().toString()!=null) {
                             if(chefs_enrolled!=null){
-                            chef_ingredients = dataSnapshot.child(chefs_enrolled).child(chef_menu).child("ingredients").getValue().toString();
-                            quantity_avbl = dataSnapshot.child(chefs_enrolled).child(chef_menu).child("quantity").getValue().toString();
-                                chefMenuDetails = new ChefMenuDetails(chef_ingredients, quantity_avbl);
+                                chef_ingredients = dataSnapshot.child(chefs_enrolled).child(chef_menu).child("ingredients").getValue().toString();
+                                quantity_avbl = dataSnapshot.child(chefs_enrolled).child(chef_menu).child("quantity").getValue().toString();
+                                String food_image;
+                                if(dataSnapshot.child(chefs_enrolled).child(chef_menu).child("foodImg").getValue() != null) {
+                                    food_image = dataSnapshot.child(chefs_enrolled).child(chef_menu).child("foodImg").getValue().toString();
+                                } else {
+                                    food_image = "";
+                                }
+
+                                ChefMenuDetails chefMenuDetails = new ChefMenuDetails(chef_ingredients, quantity_avbl, food_image);
                                 chefMenuDetailsMap.put(chefs_enrolled, chefMenuDetails);
                             System.out.println("Chef_details: " + chefs_enrolled + " " + chef_ingredients + " " + quantity_avbl);
 
@@ -119,9 +126,9 @@ public class ChefsEnrolledActivity extends AppCompatActivity {
 
                     String chefpicUrl = dataSnapshot.child(key).child("pic").getValue().toString();
                     ChefMenuDetails value=chefMenuDetailsMap.get(key);
-                    System.out.println("Key: " + key + " Ingre: " + " " + chefMenuDetails.getIngredients() + "Quan: " + " " + chefMenuDetails.getQuantity() + " " + "Photo:" + " " + chefpicUrl);
+                    System.out.println("Key: " + key + " Ingre: " + " " + value.getIngredients() + "Quan: " + " " + value.getQuantity() + " " + "Photo:" + " " + chefpicUrl);
 
-                    chefsEnrolledDetails.add(new ChefsEnrolledList(key, chefpicUrl, chefMenuDetails.getIngredients(), chefMenuDetails.getQuantity()));
+                    chefsEnrolledDetails.add(new ChefsEnrolledList(key, chefpicUrl, value.getIngredients(), value.getQuantity(), value.getFoodImg()));
                     System.out.println("FINAL LIST: " + chefsEnrolledDetails);
                     // Toast.makeText(ctx, "Key: " + key + " Value: " + value, Toast.LENGTH_LONG).show();
                     chefsEnrolledList();
@@ -153,6 +160,7 @@ public class ChefsEnrolledActivity extends AppCompatActivity {
                 chefDishInfo.putExtra("chefDish", chef_menu);
                 chefDishInfo.putExtra("chefIngredients", chefsEnrolledList.getIngredients());
                 chefDishInfo.putExtra("chefQuantity", chefsEnrolledList.getQuantity());
+                chefDishInfo.putExtra("foodImage", chefsEnrolledList.getFoodImage());
                 startActivity(chefDishInfo);
 
 

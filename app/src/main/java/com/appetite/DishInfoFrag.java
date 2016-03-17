@@ -7,6 +7,9 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.NotificationCompat;
@@ -21,11 +24,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dropbox.client2.DropboxAPI;
+import com.dropbox.client2.android.AndroidAuthSession;
+import com.dropbox.client2.exception.DropboxException;
+import com.dropbox.client2.session.AppKeyPair;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,18 +45,65 @@ public class DishInfoFrag extends Fragment {
     ImageView chefDishPic;
     TextView chefIngredients, chefQuantity;
     EditText quantityInput;
-    String quantityOrdered, chefName, chef,dish,quan;
+    String quantityOrdered, chefName, chef,dish,quan, foodImage;
     Button orderButton;
     Firebase mRef,mRef1,mRef2;
     int remainingQuantity = 0;
+    String imagePath;
+    final static private String APP_KEY = "ya6xzn1c4rjsjdu";
+    final static private String APP_SECRET = "tka1puxynswkeek";
+    private DropboxAPI<AndroidAuthSession> mDBApi;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+        AppKeyPair keyPair = new AppKeyPair(APP_KEY, APP_SECRET);
+        AndroidAuthSession session =
+                new AndroidAuthSession(keyPair,
+                        "bu-o0D7UlrAAAAAAAAAACqbhdtpfpEG8J1_KrFJWnCLfyxlnJ8q_44LSiXkk1yig");
+        mDBApi = new DropboxAPI<AndroidAuthSession>(session);
+
 
         View v = inflater.inflate(R.layout.tab_dish_info, container, false);
         chefDishPic = (ImageView) v.findViewById(R.id.chefDishPic);
-        chefDishPic.setImageResource(R.drawable.salmon_slaw);
+        //chefDishPic.setImageResource(R.drawable.salmon_slaw);
+        imagePath = DishDetailsActivity.chefFoodImage;
+
+        if(imagePath.equals("")) {
+            chefDishPic.setImageResource(R.drawable.caesarsalad);
+        } else {
+            AsyncTask<String, Void, ByteArrayOutputStream> downloadHandler = new AsyncTask<String, Void, ByteArrayOutputStream>() {
+
+                @Override
+                protected ByteArrayOutputStream doInBackground(String... params) {
+
+                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                    try {
+
+                        DropboxAPI.DropboxFileInfo info = mDBApi.getFile(imagePath, null, byteArrayOutputStream, null);
+                    } catch (DropboxException e) {
+                        e.printStackTrace();
+                    } finally {
+                        try {
+                            byteArrayOutputStream.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    return byteArrayOutputStream;
+                }
+
+                @Override
+                protected void onPostExecute(ByteArrayOutputStream outputStream) {
+                    byte[] outputArray = outputStream.toByteArray();
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(outputArray, 0, outputArray.length);
+                    chefDishPic.setImageBitmap(bitmap);
+                }
+            };
+
+            downloadHandler.execute();
+        }
 
         chefIngredients = (TextView) v.findViewById(R.id.chefIngredients);
         chefIngredients.setText(DishDetailsActivity.chefDishIngredients);

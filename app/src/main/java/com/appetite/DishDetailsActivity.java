@@ -35,7 +35,7 @@ public class DishDetailsActivity extends AppCompatActivity {
     ImageView chefDishPic;
     TextView chefIngredients,chefQuantity;
     EditText quantityInput;
-    static String quantityOrdered,chefName,chefDishName,chefDishIngredients,chefDishQuantity;
+    static String quantityOrdered,chefName,chefDishName,chefDishIngredients,chefDishQuantity, chefFoodImage;
     Button orderButton,reviewBtn;
     Firebase mRef;
     public static int PRICE = 5;
@@ -93,6 +93,8 @@ public class DishDetailsActivity extends AppCompatActivity {
 
         Bundle bdle = getIntent().getExtras();
         chefDishQuantity = bdle.getString("chefQuantity");
+
+        chefFoodImage = bundle.getString("foodImage");
 
     }
 

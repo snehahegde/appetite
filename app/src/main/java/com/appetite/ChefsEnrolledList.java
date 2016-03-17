@@ -9,15 +9,19 @@ public class ChefsEnrolledList {
     String chefPic;
     String quantity;
     String ingredients;
+    String foodImg;
 
-    public ChefsEnrolledList(String chefName,String chefPic, String ingredients, String quantity ) {
+    public ChefsEnrolledList(String chefName,String chefPic, String ingredients, String quantity ,String foodImg) {
         this.chefName = chefName;
         this.chefPic = chefPic;
         this.ingredients = ingredients;
         this.quantity = quantity;
+        this.foodImg = foodImg;
 
     }
+    public String getFoodImage() { return foodImg; }
 
+    public void setFoodImage(String foodImg) { this.foodImg = foodImg; }
 
     public String getChefName() {
         return chefName;

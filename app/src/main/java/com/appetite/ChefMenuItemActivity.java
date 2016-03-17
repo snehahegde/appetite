@@ -99,7 +99,7 @@ public class ChefMenuItemActivity extends AppCompatActivity {
                 chefName = Login.userName;
                 System.out.println(chefName + " " + itemName + " " + quantity + " " + ingredients + foodImagePath);
 
-                mRef = new Firebase("https://app-etite.firebaseio.com/" + chefName);
+                mRef = new Firebase("https://app-etite.firebaseio.com/chefsEnrolled/" + chefName);
                 mRef.child(itemName).setValue(new ChefMenuItem(ingredients, quantity, foodImagePath));
 
 //                Intent chefMenuList = new Intent(ChefMenuItemActivity.this,ChefMenuInfo.class);

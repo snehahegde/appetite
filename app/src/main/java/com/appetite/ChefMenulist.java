@@ -39,7 +39,7 @@ public class ChefMenulist extends AppCompatActivity {
         displayLabel.setText("Menu list completed...");
 
         chefName = Login.userName;
-        mRef = new Firebase("https://app-etite.firebaseio.com/" + chefName);
+        mRef = new Firebase("https://app-etite.firebaseio.com/chefsEnrolled/" + chefName);
 
         mRef.addValueEventListener(new ValueEventListener() {
 

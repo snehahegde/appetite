@@ -105,7 +105,7 @@ public class ChefMenuInfo extends AppCompatActivity {
         }
 
         System.out.println("ChefNaMe: " + chefName + " " + "ChefMeNu: " + chef_menu);
-        mRef = new Firebase("https://app-etite.firebaseio.com/" + chefName + "/" + chef_menu+"/");
+        mRef = new Firebase("https://app-etite.firebaseio.com/chefsEnrolled/" + chefName + "/" + chef_menu+"/");
 
         mRef.addValueEventListener(new ValueEventListener() {
 

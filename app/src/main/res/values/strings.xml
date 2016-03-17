@@ -13,6 +13,7 @@
     <string name="action_home">Home</string>
     <string name="action_logOut">Log Out</string>
     <string name="action_map">Map</string>
+    <string name="action_mic">Mic</string>
     <string name="action_reviews">Reviews</string>
     <string name="title_activity_chef_menu_item">Chef_menuItem</string>
     <string name="title_activity_chef_menulist">ChefMenulist</string>
@@ -24,7 +25,7 @@
     <string name="title_activity_chefs_enrolled_list_adapter">ChefsEnrolledListAdapter</string>
     <string name="title_activity_dish_details">DishDetailsActivity</string>
     <string name="title_activity_reviews_cook_module">ReviewsCookModuleActivity</string>
-    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyA8l95ph-xa3SV3V-FTVpCdnI-rivInuGk</string>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyA_3_B9OUTm2CHWjBid9pq2hzuu_zFsBz4</string>
     <string name="title_activity_map">MapActivity</string>
     <string name="title_activity_chef_users_map">ChefUsersMapActivity</string>
 </resources>

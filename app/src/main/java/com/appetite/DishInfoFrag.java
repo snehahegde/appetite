@@ -129,7 +129,7 @@ public class DishInfoFrag extends Fragment {
         showAlertDialog();
         chefQuantity.setText(String.valueOf(remainingQuantity));
         Firebase.setAndroidContext(getContext());
-        mRef = new Firebase("https://app-etite.firebaseio.com/" + DishDetailsActivity.chefName);
+        mRef = new Firebase("https://app-etite.firebaseio.com/chefsEnrolled/" + DishDetailsActivity.chefName);
         Map<String, Object> quantityOrderedMap = new HashMap<String, Object>();
         quantityOrderedMap.put(DishDetailsActivity.chefDishName + "/quantityOrdered", quantityOrdered);
         System.out.println("Testing" + DishDetailsActivity.chefName);

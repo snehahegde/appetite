@@ -55,7 +55,7 @@ public class ChefsEnrolledActivity extends AppCompatActivity {
 
 //        itemName.setText(chef_menu);
         Firebase.setAndroidContext(this);
-        mRef = new Firebase("https://app-etite.firebaseio.com");
+        mRef = new Firebase("https://app-etite.firebaseio.com/chefsEnrolled/");
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

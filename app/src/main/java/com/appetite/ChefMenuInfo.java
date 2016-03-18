@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,6 +46,7 @@ public class ChefMenuInfo extends AppCompatActivity {
     Firebase mRef,mRef2;
     String customer,status;
     Button doneBtn;
+    EditText takeMsg;
     String qOrdered,chefMenus,quantity,ingredients,chef_menu,chefmenu;
     public GoogleApiClient mGoogleApiClient;
     private DropboxAPI<AndroidAuthSession> mDBApi;
@@ -123,10 +125,7 @@ public class ChefMenuInfo extends AppCompatActivity {
                     System.out.println("Quan: " + quantity + " " + "Ing: " + ingredients + " " + "Orders: " + qOrdered);
                     if(MenuList.orderPage){
                     dishIngre = (TextView) findViewById(R.id.ingre);
-                    dishIngre.setText(ingredients);
-
-                        dishQuan= (TextView) findViewById(R.id.available);
-                    dishQuan.setText(quantity);
+                    dishIngre.setText(customer);
 
                     quanOrdered = (TextView) findViewById(R.id.ordered);
                     quanOrdered.setText(qOrdered);
@@ -217,6 +216,7 @@ public class ChefMenuInfo extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_home) {
+            finish();
             return true;
         }
         else if(id == R.id.action_reviews){
@@ -262,7 +262,8 @@ public class ChefMenuInfo extends AppCompatActivity {
         mRef2 = new Firebase("https://app-etite.firebaseio.com/notifyUsers/");
         Map<String, Object> orders = new HashMap<String, Object>();
         orders.put("orderStatus","ready");
-       // orders.put("user",customer );
+        takeMsg = (EditText)findViewById(R.id.msgFrmChef);
+        orders.put("message",takeMsg.getText().toString() );
         mRef2.updateChildren(orders);
 
     }

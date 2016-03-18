@@ -8,9 +8,6 @@ public class ChefMenuItem {
     String foodImg;
     String chefName;
     String ingredients;
-
-
-
     String location;
     String quantity;
 

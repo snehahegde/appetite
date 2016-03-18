@@ -6,28 +6,31 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.appetite.OrderConfirmation"
+    android:background="@drawable/redcloth3"
     tools:showIn="@layout/activity_order_confirmation"
     android:orientation="vertical">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:textSize="17sp"
+        android:layout_marginTop="10dp"
+        android:textSize="20sp"
         android:padding="4dp"
+        android:textColor="#AD3232"
         android:text="Order Summary"/>
 
     <ImageView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
         android:padding="5dp"
+        android:layout_gravity="center_horizontal"
         android:id= "@+id/chefImg"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
         <TextView
@@ -42,6 +45,7 @@
             android:id="@+id/chefName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="#000000"
             android:textSize="15dp" />
     </LinearLayout>
 
@@ -49,7 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
         <TextView
@@ -64,13 +68,14 @@
             android:id="@+id/chefMenu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="#000000"
             android:textSize="15dp" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
         <TextView
@@ -84,6 +89,7 @@
         <TextView
             android:id="@+id/userQuan"
             android:layout_width="wrap_content"
+            android:textColor="#000000"
             android:layout_height="wrap_content"
             android:textSize="15dp" />
     </LinearLayout>
@@ -91,7 +97,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
         <TextView
@@ -106,6 +112,7 @@
             android:id="@+id/price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="#000000"
             android:textSize="15dp" />
     </LinearLayout>
     <LinearLayout
@@ -117,6 +124,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:textSize="17sp"
+        android:textColor="#000000"
         android:padding="4dp"
         android:id= "@+id/tv_orderConfirmation"/>
     </LinearLayout>

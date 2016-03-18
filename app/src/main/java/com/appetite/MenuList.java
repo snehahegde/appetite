@@ -226,15 +226,13 @@ public class MenuList extends AppCompatActivity {
     }
     public void notifyUser(){
         int requestCode = 0;
-        Intent i = new Intent(this,ChefMenuInfo.class);
-        //i.putExtra("menuname",dish);
-        //i.putExtra("user",Login.userName);
+        Intent i = new Intent(this,UserNotifiedActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(
                 this, requestCode, i, PendingIntent.FLAG_UPDATE_CURRENT);
         int id = 12345;
         Notification notification = new Notification.Builder(this)
-                .setContentTitle("Order Ready!")
-                .setContentText("Your order is ready for pick up.")
+                .setContentTitle("Order Status!")
+                .setContentText("")
                 .setSmallIcon(android.R.drawable.ic_dialog_alert)
                 .setContentIntent(pendingIntent)
                 .setPriority(Notification.PRIORITY_MAX)

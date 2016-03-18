@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
@@ -51,6 +51,7 @@
         <activity android:name=".MapActivity" />
         <activity android:name=".ChefUsersMapActivity" />
         <activity android:name=".OrderConfirmation" />
+        <activity android:name=".UserNotifiedActivity"></activity>
     </application>
 
 </manifest>

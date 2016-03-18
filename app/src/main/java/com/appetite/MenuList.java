@@ -163,6 +163,7 @@ public class MenuList extends AppCompatActivity {
         Intent i = new Intent(this,ChefMenuInfo.class);
 
         i.putExtra("menuname",dish);
+        System.out.println("FOOD_NAME: " + dish);
         i.putExtra("user", Login.userName);
         PendingIntent pendingIntent = PendingIntent.getActivity(
                 this, requestCode, i, PendingIntent.FLAG_UPDATE_CURRENT);

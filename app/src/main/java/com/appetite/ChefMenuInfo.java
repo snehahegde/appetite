@@ -100,6 +100,7 @@ public class ChefMenuInfo extends AppCompatActivity {
         else{
             Bundle bundle = getIntent().getExtras();
             chef_menu = bundle.getString("menu_name");
+            System.out.println("CHEFMENU: " + chef_menu);
             menuName = (TextView) findViewById(R.id.chef_menu);
             menuName.setText(chef_menu);
         }

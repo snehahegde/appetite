@@ -9,10 +9,10 @@
     tools:context="com.appetite.ChefsEnrolledListAdapter"
     tools:showIn="@layout/activity_chefs_enrolled_list_adapter">
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="horizontal">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal">
 
     <ImageView
         android:layout_width="65dp"
@@ -21,13 +21,28 @@
         android:focusableInTouchMode="false"
         android:id="@+id/chef_pic" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="15dp"
-        android:padding="3dp"
-        android:text="chefs_name"
-        android:id="@+id/chefsName"/>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15dp"
+                    android:padding="3dp"
+                    android:text="chefs_name"
+                    android:id="@+id/chefsName"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15dp"
+                    android:padding="3dp"
+                    android:text="distance"
+                    android:id="@+id/distance"
+                    android:layout_marginTop="10dp" />
+            </LinearLayout>
 
         </LinearLayout>
 

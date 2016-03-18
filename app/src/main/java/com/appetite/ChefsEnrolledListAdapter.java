@@ -29,11 +29,15 @@ public class ChefsEnrolledListAdapter extends ArrayAdapter<ChefsEnrolledList> {
     Context context;
     private final List<ChefsEnrolledList> chefsList;
     ImageView chefImg;
+    private double mLatitude;
+    private double mLongitude;
 
-    public ChefsEnrolledListAdapter(Context context, int layout, List<ChefsEnrolledList> chefsList) {
+    public ChefsEnrolledListAdapter(Context context, int layout, List<ChefsEnrolledList> chefsList, double latitude, double longitude) {
         super(context, R.layout.activity_chefs_enrolled_list_adapter, chefsList);
         this.context = context;
         this.chefsList = chefsList;
+        mLatitude = latitude;
+        mLongitude = longitude;
     }
 
     @Override
@@ -52,7 +56,16 @@ public class ChefsEnrolledListAdapter extends ArrayAdapter<ChefsEnrolledList> {
         chefImg = (ImageView) view.findViewById(R.id.chef_pic);
         new LoadProfileImage(chefImg).execute(chefsEnrolledList.getChefPic());
 
+        //set distance
 
+        double chefLattitude= chefsEnrolledList.getLatitude();
+        double chefLongitude = chefsEnrolledList.getLongitude();
+
+        double distance = Math.sqrt((Math.pow(mLatitude - chefLattitude, 2) + (Math.pow(mLongitude - chefLongitude, 2))));
+        TextView distanceTextView = (TextView)view.findViewById(R.id.distance);
+        //String distanceStr = String.valueOf(distance*69);
+        String distanceStr = String.format("%.2f mi", distance * 69);
+        distanceTextView.setText(distanceStr);
 
         return view;
 

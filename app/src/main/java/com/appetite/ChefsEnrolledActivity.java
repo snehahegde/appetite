@@ -1,10 +1,14 @@
 package com.appetite;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -18,6 +22,9 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,7 +32,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-public class ChefsEnrolledActivity extends AppCompatActivity {
+import static java.util.Collections.sort;
+
+public class ChefsEnrolledActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     Firebase mRef, picRef;
     TextView itemName;
@@ -38,12 +47,22 @@ public class ChefsEnrolledActivity extends AppCompatActivity {
     ListView chefsEnrolledlistView;
     ChefsEnrolledListAdapter chefsEnrolledListAdapter;
     String key;
+    Double mLatitude, mLongitude;
+    GoogleApiClient mGoogleApiClient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chefs_enrolled);
 
-
+        if (mGoogleApiClient == null) {
+            mGoogleApiClient = new GoogleApiClient.Builder(this)
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(LocationServices.API)
+                    .enableAutoManage(this, this)
+                    .build();
+        }
 
         chefsEnrolledDetails = new ArrayList<ChefsEnrolledList>();
 //        itemName = (TextView) findViewById(R.id.tv_menuName);
@@ -117,10 +136,12 @@ public class ChefsEnrolledActivity extends AppCompatActivity {
                     key=(String)myVeryOwnIterator.next();
 
                     String chefpicUrl = dataSnapshot.child(key).child("pic").getValue().toString();
+                    String latitude = dataSnapshot.child(key).child("latitude").getValue().toString();
+                    String longitude = dataSnapshot.child(key).child("longitude").getValue().toString();
                     ChefMenuDetails value=chefMenuDetailsMap.get(key);
                     System.out.println("Key: " + key + " Ingre: " + " " + value.getIngredients() + "Quan: " + " " + value.getQuantity() + " " + "Photo:" + " " + chefpicUrl);
 
-                    chefsEnrolledDetails.add(new ChefsEnrolledList(key, chefpicUrl, value.getIngredients(), value.getQuantity(), value.getFoodImg()));
+                    chefsEnrolledDetails.add(new ChefsEnrolledList(key, chefpicUrl, value.getIngredients(), value.getQuantity(), value.getFoodImg(), latitude, longitude));
                     System.out.println("FINAL LIST: " + chefsEnrolledDetails);
 
                         chefsEnrolledList();
@@ -139,7 +160,8 @@ public class ChefsEnrolledActivity extends AppCompatActivity {
 
         chefsEnrolledlistView = (ListView) findViewById(R.id.chefsEnrolledlistView);
 
-        chefsEnrolledListAdapter = new ChefsEnrolledListAdapter(this, R.layout.activity_chefs_enrolled_list_adapter, chefsEnrolledDetails);
+        chefsEnrolledListAdapter = new ChefsEnrolledListAdapter(this, R.layout.activity_chefs_enrolled_list_adapter, chefsEnrolledDetails, mLatitude, mLongitude);
+        sort(chefsEnrolledDetails, new ChefsEnrolledList.DistanceComparator(mLatitude, mLongitude));
         chefsEnrolledlistView.setAdapter(chefsEnrolledListAdapter);
 
         chefsEnrolledlistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -186,4 +208,26 @@ public class ChefsEnrolledActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onConnected(Bundle bundle) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            return;
+        }
+        Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        if (mLastLocation != null) {
+            mLatitude = mLastLocation.getLatitude();
+            mLongitude = mLastLocation.getLongitude();
+        }
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+
+    }
 }

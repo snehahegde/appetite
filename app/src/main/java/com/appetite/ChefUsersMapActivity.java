@@ -3,6 +3,7 @@ package com.appetite;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -105,7 +106,9 @@ public class ChefUsersMapActivity extends FragmentActivity implements OnMapReady
             String line = overviewPolyline.getString("points");
             List<LatLng> decodedPath = PolyUtil.decode(line);
 
-            mMap.addPolyline(new PolylineOptions().addAll(decodedPath));
+            mMap.addPolyline(new PolylineOptions().addAll(decodedPath)
+                    .width(5)
+                    .color(Color.BLUE));
 
             JSONObject bounds = route.getJSONObject("bounds");
             LatLngBounds.Builder builder = new LatLngBounds.Builder();

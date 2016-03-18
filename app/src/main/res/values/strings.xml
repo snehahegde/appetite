@@ -14,7 +14,10 @@
     <string name="action_logOut">Log Out</string>
     <string name="action_map">Map</string>
     <string name="action_mic">Mic</string>
+<<<<<<< HEAD
     <string name="action_camera">Camera</string>
+=======
+>>>>>>> fbfe4d1aaa65ab2675395dc49dde538539fecf37
     <string name="action_reviews">Reviews</string>
     <string name="title_activity_chef_menu_item">Chef_menuItem</string>
     <string name="title_activity_chef_menulist">ChefMenulist</string>

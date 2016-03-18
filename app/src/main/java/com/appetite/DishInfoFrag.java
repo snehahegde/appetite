@@ -149,6 +149,7 @@ public class DishInfoFrag extends Fragment {
 
     public void placeOrder() {
         quantityOrdered = quantityInput.getText().toString();
+<<<<<<< HEAD
 
 
             remainingQuantity = Integer.parseInt(DishDetailsActivity.chefDishQuantity) - Integer.parseInt(quantityOrdered);
@@ -167,6 +168,20 @@ public class DishInfoFrag extends Fragment {
             mRef2.child("user").setValue(Login.userName);
 
             MainActivity.cookModule = false;
+=======
+        remainingQuantity = Integer.parseInt(DishDetailsActivity.chefDishQuantity) - Integer.parseInt(quantityOrdered);
+        showAlertDialog();
+        chefQuantity.setText(String.valueOf(remainingQuantity));
+        Firebase.setAndroidContext(getContext());
+        mRef = new Firebase("https://app-etite.firebaseio.com/chefsEnrolled/" + DishDetailsActivity.chefName);
+        Map<String, Object> quantityOrderedMap = new HashMap<String, Object>();
+        quantityOrderedMap.put(DishDetailsActivity.chefDishName + "/quantityOrdered", quantityOrdered);
+        System.out.println("Testing" + DishDetailsActivity.chefName);
+        quantityOrderedMap.put(DishDetailsActivity.chefDishName + "/quantity", String.valueOf(remainingQuantity));
+        mRef.updateChildren(quantityOrderedMap);
+        mRef2 = new Firebase("https://app-etite.firebaseio.com/notifyUsers/");
+        mRef2.child("user").setValue(Login.userName);
+>>>>>>> fbfe4d1aaa65ab2675395dc49dde538539fecf37
 
     }
 

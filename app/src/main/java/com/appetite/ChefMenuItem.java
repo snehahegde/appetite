@@ -12,11 +12,16 @@ public class ChefMenuItem {
 
 
     String location;
-    int quantity;
+    String quantity;
 
     public ChefMenuItem(){}
 
-    public ChefMenuItem(String ingredients,int quantity,String imagePath){
+    public ChefMenuItem(String chefName, String chefQuantity){
+        this.chefName = chefName;
+        this.quantity = chefQuantity;
+    }
+
+    public ChefMenuItem(String ingredients,String quantity,String imagePath){
         this.ingredients = ingredients;
         this.quantity = quantity;
         this.foodImg = imagePath;
@@ -47,11 +52,11 @@ public class ChefMenuItem {
         this.foodImg = foodImg;
     }
 
-    public int getQuantity() {
+    public String getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(String quantity) {
         this.quantity = quantity;
     }
     public String getChefName() {

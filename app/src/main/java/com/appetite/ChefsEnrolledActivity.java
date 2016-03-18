@@ -30,6 +30,7 @@ public class ChefsEnrolledActivity extends AppCompatActivity {
     Firebase mRef, picRef;
     TextView itemName;
     TextView topLabel;
+    Boolean displayList;
     String chef_menu,chefs_enrolled,chef_ingredients,quantity_avbl;
     List<ChefsEnrolledList> chefsEnrolledDetails;
     Map<String,ChefMenuDetails>  chefMenuDetailsMap = new HashMap<String, ChefMenuDetails>();
@@ -55,7 +56,7 @@ public class ChefsEnrolledActivity extends AppCompatActivity {
 
 //        itemName.setText(chef_menu);
         Firebase.setAndroidContext(this);
-        mRef = new Firebase("https://app-etite.firebaseio.com");
+        mRef = new Firebase("https://app-etite.firebaseio.com/chefsEnrolled/");
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -67,11 +68,8 @@ public class ChefsEnrolledActivity extends AppCompatActivity {
 
                     if (postSnapshot.hasChild(chef_menu)) {
                         chefs_enrolled = postSnapshot.getKey();
-//                        System.out.println("SUB - CHILD: " + postSnapshot.child(chefs_enrolled).getValue().toString());
-//                        chef_ingredients = dataSnapshot.child(chefs_enrolled).child(chef_menu).child("ingredients").getValue().toString();
-//                        quantity_avbl = dataSnapshot.child(chefs_enrolled).child(chef_menu).child("quantity").getValue().toString();
-//                        if(dataSnapshot.child(chefs_enrolled).child(chef_menu).child("ingredients").getValue().toString()!=null && dataSnapshot.child(chefs_enrolled).child(chef_menu).child("quantity").getValue().toString()!=null) {
-                            if(chefs_enrolled!=null){
+                            if(chefs_enrolled!=null && Integer.parseInt(dataSnapshot.child(chefs_enrolled).child(chef_menu).child("quantity").getValue().toString())>0){
+                                //displayList =true;
                                 chef_ingredients = dataSnapshot.child(chefs_enrolled).child(chef_menu).child("ingredients").getValue().toString();
                                 quantity_avbl = dataSnapshot.child(chefs_enrolled).child(chef_menu).child("quantity").getValue().toString();
                                 String food_image;
@@ -94,13 +92,7 @@ public class ChefsEnrolledActivity extends AppCompatActivity {
 
                     }
                 }
-//                chef_ingredients = dataSnapshot.child(chefs_enrolled).child(chef_menu).child("ingredients").getValue().toString();
-//                quantity_avbl = dataSnapshot.child(chefs_enrolled).child(chef_menu).child("quantity").getValue().toString();
-//                System.out.println("chef_ingredients: " + dataSnapshot.child(chefs_enrolled).child(chef_menu).child("ingredients").getValue().toString());
-//                System.out.println("quantity_avbl: " + dataSnapshot.child(chefs_enrolled).child(chef_menu).child("quantity").getValue().toString());
-//                chefMenuDetails = new ChefMenuDetails(chef_ingredients,quantity_avbl);
-//                chefMenuDetailsMap.put(chefs_enrolled, chefMenuDetails);
-//                System.out.println("CHEF_LIST: " + chefMenuDetailsMap);
+
                 chefsList();
 
             }
@@ -130,8 +122,9 @@ public class ChefsEnrolledActivity extends AppCompatActivity {
 
                     chefsEnrolledDetails.add(new ChefsEnrolledList(key, chefpicUrl, value.getIngredients(), value.getQuantity(), value.getFoodImg()));
                     System.out.println("FINAL LIST: " + chefsEnrolledDetails);
-                    // Toast.makeText(ctx, "Key: " + key + " Value: " + value, Toast.LENGTH_LONG).show();
-                    chefsEnrolledList();
+
+                        chefsEnrolledList();
+
                 }
 
             }

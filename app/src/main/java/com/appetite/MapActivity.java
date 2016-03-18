@@ -67,7 +67,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         chef_menu = bundle.getString("menu_name");
 
         //Kavitha's part chefs' enrolled
-        mRef = new Firebase("https://app-etite.firebaseio.com");
+        mRef = new Firebase("https://app-etite.firebaseio.com/chefsEnrolled/");
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

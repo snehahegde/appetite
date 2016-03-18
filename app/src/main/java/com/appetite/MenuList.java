@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
@@ -54,6 +55,7 @@ public class MenuList extends AppCompatActivity {
     int count=0;
     int counts=0;
     Menu menuItems;
+    private static final int VOICE_RECOGNITION_REQUEST_CODE = 1234;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -190,7 +192,7 @@ public class MenuList extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 menuItems = menuList.get(position);
                 if (MainActivity.cookModule) {
-                    menuRef = new Firebase("https://app-etite.firebaseio.com/" + Login.userName);
+                    menuRef = new Firebase("https://app-etite.firebaseio.com/chefsEnrolled/" + Login.userName);
                     menuRef.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
@@ -256,8 +258,8 @@ public class MenuList extends AppCompatActivity {
 //                        String itemPrice = postSnapshot.child("item_price").getValue().toString();
                         String itemImage = postSnapshot.child("imageEncoded").getValue().toString();
                         String itemCuisine = postSnapshot.child("cuisine").getValue().toString();
-                        if (itemName.equals(searchDish) || itemCuisine.equals(searchDish)) {
-                            menuList.add(new Menu(itemName ,itemImage, itemCuisine));
+                        if (itemName.equalsIgnoreCase(searchDish) || itemCuisine.equalsIgnoreCase(searchDish)) {
+                            menuList.add(new Menu(itemName, itemImage, itemCuisine));
                         }
                     }
                     menuList();
@@ -270,6 +272,36 @@ public class MenuList extends AppCompatActivity {
             }
         });
     }
+    private void startVoiceRecognitionActivity() {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        // Specify the calling package to identify your application
+        intent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, getClass().getPackage().getName());
+        // Display an hint to the user about what he should say.
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Hungry for?!");
+        // Given an hint to the recognizer about what the user is going to say
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        // Specify how many results you want to receive. The results will be sorted
+        // where the first result is the one with higher confidence.
+        intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 5);
+        startActivityForResult(intent, VOICE_RECOGNITION_REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == VOICE_RECOGNITION_REQUEST_CODE && resultCode == RESULT_OK) {
+            List<String> matches = data.getStringArrayListExtra(
+                    RecognizerIntent.EXTRA_RESULTS);
+            //((TextView) findViewById(R.id.searchW)).setText(matches.get(0));
+            searchWord.setText(matches.get(0));
+            String voiceInput = searchWord.getText().toString();
+            System.out.println("VOICE_INPUT: " + voiceInput);
+            if(voiceInput!=null ){
+                searchContent(voiceInput);
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
     public boolean onCreateOptionsMenu(android.view.Menu menu) {
 
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -278,6 +310,7 @@ public class MenuList extends AppCompatActivity {
         else{
             getMenuInflater().inflate(R.menu.menu_eat, menu);
         }
+        getMenuInflater().inflate(R.menu.menu_mic, menu);
         return true;
     }
 
@@ -316,6 +349,9 @@ public class MenuList extends AppCompatActivity {
 
                         }
                     });
+            return true;
+        }else if(id==R.id.action_mic){
+            startVoiceRecognitionActivity();
             return true;
         }
 

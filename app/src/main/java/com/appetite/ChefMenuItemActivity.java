@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dropbox.client2.DropboxAPI;
 import com.dropbox.client2.android.AndroidAuthSession;
@@ -36,12 +37,12 @@ import static java.util.UUID.randomUUID;
 
 public class ChefMenuItemActivity extends AppCompatActivity {
 
-    String itemName,chefName,location,ingredients,foodImagePath;
+    String itemName,chefName,location,ingredients,foodImagePath,quantityInput;
     EditText et_quantity;
     EditText et_ingredients;
-    int quantity;
-    Button bt_post;
-    Firebase mRef;
+    int count = 0;
+    Button bt_post,bt_increase,bt_decrease;
+    Firebase mRef, orderRef;
     public GoogleApiClient mGoogleApiClient;
     private static final int SELECT_PHOTO = 100;
     final static private String APP_KEY = "ya6xzn1c4rjsjdu";
@@ -59,15 +60,15 @@ public class ChefMenuItemActivity extends AppCompatActivity {
                         "bu-o0D7UlrAAAAAAAAAACqbhdtpfpEG8J1_KrFJWnCLfyxlnJ8q_44LSiXkk1yig");
         mDBApi = new DropboxAPI<AndroidAuthSession>(session);
 
-        ImageButton captureButton = (ImageButton)findViewById(R.id.camera_button);
-        captureButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent photoPickIntent = new Intent(Intent.ACTION_PICK);
-                photoPickIntent.setType("image/*");
-                startActivityForResult(photoPickIntent, SELECT_PHOTO);
-            }
-        });
+//        ImageButton captureButton = (ImageButton)findViewById(R.id.camera_button);
+//        captureButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent photoPickIntent = new Intent(Intent.ACTION_PICK);
+//                photoPickIntent.setType("image/*");
+//                startActivityForResult(photoPickIntent, SELECT_PHOTO);
+//            }
+//        });
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -77,34 +78,62 @@ public class ChefMenuItemActivity extends AppCompatActivity {
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
+
         //view item name
         TextView caption = (TextView) findViewById(R.id.view_itemName);
         caption.setText(getIntent().getExtras().getString("item_name"));
-        caption.setTextColor(Color.BLACK);
         et_ingredients = (EditText) findViewById(R.id.et_ingredients);
-        et_quantity = (EditText) findViewById(R.id.et_quantityLabel);
         bt_post = (Button) findViewById(R.id.postButton);
+
+        quantityIncDec();
 
         postChefDetails();
     }
+    public void quantityIncDec(){
+        et_quantity = (EditText) findViewById(R.id.et_quantityLabel);
+        et_quantity.setText(String.valueOf(count));
+
+        bt_increase = (Button)findViewById(R.id.bt_increment);
+        bt_increase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                count++;
+                et_quantity.setText(String.valueOf(count));
+                quantityInput = et_quantity.getText().toString();
+            }
+        });
+        bt_decrease = (Button)findViewById(R.id.bt_decrement);
+        bt_decrease.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                count--;
+                et_quantity.setText(String.valueOf(count));
+                quantityInput = et_quantity.getText().toString();
+
+
+            }
+        });
+
+    }
 
     public void postChefDetails(){
+
+
+
+        System.out.println("Q_INPUT: " + quantityInput);
         // some change
         bt_post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ingredients = et_ingredients.getText().toString();
-                quantity = Integer.parseInt(et_quantity.getText().toString());
+                //quantity = Integer.parseInt(quantityInput);
                 itemName = getIntent().getExtras().getString("item_name");
                 chefName = Login.userName;
-                System.out.println(chefName + " " + itemName + " " + quantity + " " + ingredients + foodImagePath);
+                System.out.println(chefName + " " + itemName + " " + quantityInput + " " + ingredients + foodImagePath);
 
-                mRef = new Firebase("https://app-etite.firebaseio.com/" + chefName);
-                mRef.child(itemName).setValue(new ChefMenuItem(ingredients, quantity, foodImagePath));
+                mRef = new Firebase("https://app-etite.firebaseio.com/chefsEnrolled/" + chefName);
+                mRef.child(itemName).setValue(new ChefMenuItem(ingredients, quantityInput, foodImagePath));
 
-//                Intent chefMenuList = new Intent(ChefMenuItemActivity.this,ChefMenuInfo.class);
-//                chefMenuList.putExtra("menu_name",itemName);
-//                startActivity(chefMenuList);
             }
         });
     }
@@ -117,6 +146,7 @@ public class ChefMenuItemActivity extends AppCompatActivity {
         else{
             getMenuInflater().inflate(R.menu.menu_eat, menu);
         }
+        getMenuInflater().inflate(R.menu.menu_pic, menu);
         return true;
     }
 
@@ -156,6 +186,12 @@ public class ChefMenuItemActivity extends AppCompatActivity {
                         }
                     });
             return true;
+        }else if(id==R.id.action_camera){
+
+            Intent photoPickIntent = new Intent(Intent.ACTION_PICK);
+            photoPickIntent.setType("image/*");
+            startActivityForResult(photoPickIntent, SELECT_PHOTO);
+
         }
 
         return super.onOptionsItemSelected(item);

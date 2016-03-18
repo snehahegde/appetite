@@ -15,7 +15,7 @@
         android:layout_marginTop="20dp"
         android:orientation="vertical">
         <ImageView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="200dp"
             android:layout_gravity="center"
             android:id="@+id/chef_menuImg"/>
@@ -25,7 +25,7 @@
             android:layout_gravity="center"
             android:textStyle="bold"
         android:textSize="18dp"
-        android:textColor="@color/colorPrimaryDark1"
+        android:textColor="#AD3232"
         android:id="@+id/chef_menu"/>
 
         <LinearLayout
@@ -39,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15dp"
-            android:textColor="@color/colorPrimaryDark1"
+            android:textColor="#AD3232"
             android:text="Ingredients: " />
 
         <TextView
@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:textSize="15dp"
             android:text="Quantity: "
-            android:textColor="@color/colorPrimaryDark1" />
+            android:textColor="#AD3232" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -79,7 +79,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15dp"
-            android:textColor="@color/colorPrimaryDark1"
+            android:textColor="#AD3232"
             android:text="Orders: " />
         <TextView
             android:layout_width="wrap_content"
@@ -88,20 +88,7 @@
             android:text=" "
             android:id="@+id/view_quantityOrdered"/>
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_marginTop="20dp"
-        android:orientation="vertical">
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="15dp"
-            android:text="Edit"
-            android:textColor="@color/colorPrimaryDark1"
-            android:id="@+id/bEditMenu"/>
-    </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>

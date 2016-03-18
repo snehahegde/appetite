@@ -45,14 +45,16 @@ public class DishInfoFrag extends Fragment {
     ImageView chefDishPic;
     TextView chefIngredients, chefQuantity;
     EditText quantityInput;
-    String quantityOrdered, chefName, chef,dish,quan, foodImage;
-    Button orderButton;
-    Firebase mRef,mRef1,mRef2;
+    String quantityOrdered, chefName, chef, dish, quan, foodImage,quantityAvbl;
+    Button orderButton, bt_orderInc, bt_orderDec;
+    Firebase mRef, mRef1, mRef2, orderRef;
     int remainingQuantity = 0;
     String imagePath;
+    int count = 0;
     final static private String APP_KEY = "ya6xzn1c4rjsjdu";
     final static private String APP_SECRET = "tka1puxynswkeek";
     private DropboxAPI<AndroidAuthSession> mDBApi;
+    int price = 0;
 
 
     @Override
@@ -70,7 +72,7 @@ public class DishInfoFrag extends Fragment {
         //chefDishPic.setImageResource(R.drawable.salmon_slaw);
         imagePath = DishDetailsActivity.chefFoodImage;
 
-        if(imagePath.equals("")) {
+        if (imagePath.equals("")) {
             chefDishPic.setImageResource(R.drawable.caesarsalad);
         } else {
             AsyncTask<String, Void, ByteArrayOutputStream> downloadHandler = new AsyncTask<String, Void, ByteArrayOutputStream>() {
@@ -113,37 +115,67 @@ public class DishInfoFrag extends Fragment {
         chefQuantity.setText(DishDetailsActivity.chefDishQuantity);
 
         quantityInput = (EditText) v.findViewById(R.id.etUserQuantity);
+        quantityInput.setText(String.valueOf(count));
+
+        bt_orderInc = (Button) v.findViewById(R.id.bt_increment);
+        bt_orderInc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                count++;
+                quantityInput.setText(String.valueOf(count));
+            }
+        });
+
+        bt_orderDec = (Button) v.findViewById(R.id.bt_decrement);
+        bt_orderDec.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                count--;
+                quantityInput.setText(String.valueOf(count));
+            }
+        });
+
         orderButton = (Button) v.findViewById(R.id.btOrder);
         orderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 placeOrder();
+
             }
         });
         return v;
     }
 
+
     public void placeOrder() {
         quantityOrdered = quantityInput.getText().toString();
-        remainingQuantity = Integer.parseInt(DishDetailsActivity.chefDishQuantity) - Integer.parseInt(quantityOrdered);
-        showAlertDialog();
-        chefQuantity.setText(String.valueOf(remainingQuantity));
-        Firebase.setAndroidContext(getContext());
-        mRef = new Firebase("https://app-etite.firebaseio.com/" + DishDetailsActivity.chefName);
-        Map<String, Object> quantityOrderedMap = new HashMap<String, Object>();
-        quantityOrderedMap.put(DishDetailsActivity.chefDishName + "/quantityOrdered", quantityOrdered);
-        System.out.println("Testing" + DishDetailsActivity.chefName);
-        quantityOrderedMap.put(DishDetailsActivity.chefDishName + "/quantity", String.valueOf(remainingQuantity));
-        mRef.updateChildren(quantityOrderedMap);
-        mRef2 = new Firebase("https://app-etite.firebaseio.com/notifyUsers/");
-        mRef2.child("user").setValue(Login.userName);
+
+
+            remainingQuantity = Integer.parseInt(DishDetailsActivity.chefDishQuantity) - Integer.parseInt(quantityOrdered);
+            showAlertDialog();
+            chefQuantity.setText(String.valueOf(remainingQuantity));
+            Firebase.setAndroidContext(getContext());
+            mRef = new Firebase("https://app-etite.firebaseio.com/chefsEnrolled/" + DishDetailsActivity.chefName + "/");
+
+            Map<String, Object> quantityOrderedMap = new HashMap<String, Object>();
+            quantityOrderedMap.put(DishDetailsActivity.chefDishName + "/quantityOrdered", quantityOrdered);
+            System.out.println("Testing" + DishDetailsActivity.chefName);
+            quantityOrderedMap.put(DishDetailsActivity.chefDishName + "/quantity", String.valueOf(remainingQuantity));
+            mRef.updateChildren(quantityOrderedMap);
+
+            mRef2 = new Firebase("https://app-etite.firebaseio.com/notifyUsers/");
+            mRef2.child("user").setValue(Login.userName);
+
+            MainActivity.cookModule = false;
 
     }
 
     public void showAlertDialog() {
+
+        price = Integer.parseInt(quantityOrdered) * 5;
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
         alertDialog.setTitle("Order Confirmation");
-        alertDialog.setMessage("Please confirm the order");
+        alertDialog.setMessage("Price: " + "$ " + price + "\n" + "Please confirm the order.");
         //positive response
         alertDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
@@ -156,20 +188,28 @@ public class DishInfoFrag extends Fragment {
                 orders.put("quantity", quantityOrdered);
                 mRef1.updateChildren(orders);
                 mRef1 = new Firebase("https://app-etite.firebaseio.com/orders");
-//                SmsManager smsMngr = SmsManager.getDefault();
-//                smsMngr.sendTextMessage("+4088932829", null, "You have received and order from " + Login.userName + " for" + quantityInput + " " + DishDetailsActivity.chefDishName + ".", null, null);
-                Toast.makeText(getActivity(), "Order placed!You will be notified about the pick up time shortly.", Toast.LENGTH_LONG).show();
+
+
+                Intent orderConfirm = new Intent(getActivity(), OrderConfirmation.class);
+                orderConfirm.putExtra("chefName", DishDetailsActivity.chefName);
+                orderConfirm.putExtra("chefDish",DishDetailsActivity.chefDishName);
+                orderConfirm.putExtra("quantity",quantityOrdered);
+                System.out.println("PRICE: " + String.valueOf(price));
+                orderConfirm.putExtra("price",String.valueOf(price));
+                startActivity(orderConfirm);
+
                 quantityInput.setText(" ");
             }
         });
         alertDialog.create().show();
 
     }
-    public void notifyChef(){
+
+    public void notifyChef() {
         int requestCode = 0;
         int flags = 0;
-        Intent i = new Intent(getContext(),ChefMenuInfo.class);
-        i.putExtra("menu_item",dish);
+        Intent i = new Intent(getContext(), ChefMenuInfo.class);
+        i.putExtra("menu_item", dish);
         PendingIntent pendingIntent = PendingIntent.getActivity(
                 getContext(), requestCode, i, flags);
         int id = 12345;
@@ -181,7 +221,7 @@ public class DishInfoFrag extends Fragment {
                 .setPriority(Notification.PRIORITY_MAX)
                 .setVibrate(new long[0])
                 .build();
-      //  notification.flags = Notification.DEFAULT_LIGHTS | Notification.FLAG_AUTO_CANCEL;
+        //  notification.flags = Notification.DEFAULT_LIGHTS | Notification.FLAG_AUTO_CANCEL;
         NotificationManager notificationManager = (NotificationManager) getContext().getSystemService(
                 Context.NOTIFICATION_SERVICE);
         notificationManager.notify(id, notification);

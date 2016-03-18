@@ -8,8 +8,4 @@
         android:title="@string/action_mic"
         android:icon="@drawable/ic_mic_white_24dp"
         app:showAsAction="always" />
-<<<<<<< HEAD
-=======
-
->>>>>>> fbfe4d1aaa65ab2675395dc49dde538539fecf37
 </menu>

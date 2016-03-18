@@ -258,11 +258,7 @@ public class MenuList extends AppCompatActivity {
 //                        String itemPrice = postSnapshot.child("item_price").getValue().toString();
                         String itemImage = postSnapshot.child("imageEncoded").getValue().toString();
                         String itemCuisine = postSnapshot.child("cuisine").getValue().toString();
-<<<<<<< HEAD
                         if (itemName.equalsIgnoreCase(searchDish) || itemCuisine.equalsIgnoreCase(searchDish)) {
-=======
-                        if (itemName.equals(searchDish) || itemCuisine.equals(searchDish)) {
->>>>>>> fbfe4d1aaa65ab2675395dc49dde538539fecf37
                             menuList.add(new Menu(itemName, itemImage, itemCuisine));
                         }
                     }

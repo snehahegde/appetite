@@ -60,15 +60,6 @@ public class ChefMenuItemActivity extends AppCompatActivity {
                         "bu-o0D7UlrAAAAAAAAAACqbhdtpfpEG8J1_KrFJWnCLfyxlnJ8q_44LSiXkk1yig");
         mDBApi = new DropboxAPI<AndroidAuthSession>(session);
 
-//        ImageButton captureButton = (ImageButton)findViewById(R.id.camera_button);
-//        captureButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent photoPickIntent = new Intent(Intent.ACTION_PICK);
-//                photoPickIntent.setType("image/*");
-//                startActivityForResult(photoPickIntent, SELECT_PHOTO);
-//            }
-//        });
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -133,7 +124,7 @@ public class ChefMenuItemActivity extends AppCompatActivity {
 
                 mRef = new Firebase("https://app-etite.firebaseio.com/chefsEnrolled/" + chefName);
                 mRef.child(itemName).setValue(new ChefMenuItem(ingredients, quantityInput, foodImagePath));
-
+                finish();
             }
         });
     }

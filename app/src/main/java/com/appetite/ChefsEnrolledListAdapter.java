@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -31,6 +32,8 @@ public class ChefsEnrolledListAdapter extends ArrayAdapter<ChefsEnrolledList> {
     ImageView chefImg;
     private double mLatitude;
     private double mLongitude;
+    float f;
+    double [] rating = {4.5,3.5,4.0,3.5,3.0,4.0,5.0,3.0};
 
     public ChefsEnrolledListAdapter(Context context, int layout, List<ChefsEnrolledList> chefsList, double latitude, double longitude) {
         super(context, R.layout.activity_chefs_enrolled_list_adapter, chefsList);
@@ -38,6 +41,8 @@ public class ChefsEnrolledListAdapter extends ArrayAdapter<ChefsEnrolledList> {
         this.chefsList = chefsList;
         mLatitude = latitude;
         mLongitude = longitude;
+
+
     }
 
     @Override
@@ -66,7 +71,8 @@ public class ChefsEnrolledListAdapter extends ArrayAdapter<ChefsEnrolledList> {
         //String distanceStr = String.valueOf(distance*69);
         String distanceStr = String.format("%.2f mi", distance * 69);
         distanceTextView.setText(distanceStr);
-
+        RatingBar rBar=(RatingBar)view.findViewById(R.id.ratingBar3);
+        rBar.setRating(Float.parseFloat(String.valueOf(rating[position])));
         return view;
 
     }

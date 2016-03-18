@@ -31,4 +31,5 @@
     <string name="title_activity_chef_users_map">ChefUsersMapActivity</string>
     <string name="title_activity_chef_orders_list">ChefOrdersList</string>
     <string name="title_activity_order_confirmation">OrderConfirmation</string>
+    <string name="title_activity_user_notified">UserNotifiedActivity</string>
 </resources>

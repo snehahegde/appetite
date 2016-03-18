@@ -61,27 +61,6 @@
             android:padding="7dp"
             android:layout_marginTop="20dp"
             android:id="@+id/tv_quantityLabel"/>
-            <Button
-                android:layout_width="35dp"
-                android:layout_height="30dp"
-                android:background="#AD3232"
-                android:gravity="center_horizontal"
-                android:text="+"
-                android:layout_marginTop="20dp"
-                android:textSize="20sp"
-                android:textColor="#ffffff"
-                android:textStyle="bold"
-                android:id="@+id/bt_increment"/>
-
-        <EditText
-            android:layout_width="35dp"
-            android:padding="7dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:id="@+id/et_quantityLabel" />
 
             <Button
                 android:layout_width="35dp"
@@ -94,6 +73,28 @@
                 android:textColor="#ffffff"
                 android:textStyle="bold"
                 android:id="@+id/bt_decrement"/>
+        <EditText
+            android:layout_width="35dp"
+            android:padding="7dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:id="@+id/et_quantityLabel" />
+         <Button
+                android:layout_width="35dp"
+                android:layout_height="30dp"
+                android:background="#AD3232"
+                android:gravity="center_horizontal"
+                android:text="+"
+                android:layout_marginTop="20dp"
+                android:textSize="20sp"
+                android:textColor="#ffffff"
+                android:textStyle="bold"
+                android:id="@+id/bt_increment"/>
+
+
         </LinearLayout>
 
         <LinearLayout

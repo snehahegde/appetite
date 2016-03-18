@@ -7,11 +7,7 @@
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-<<<<<<< HEAD
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-=======
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
->>>>>>> fbfe4d1aaa65ab2675395dc49dde538539fecf37
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 

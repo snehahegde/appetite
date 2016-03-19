@@ -15,7 +15,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/kitchen_utensils"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -26,16 +26,16 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".LaunchScreen"
+                  android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MainActivity"
+                  android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".Login" />
         <activity android:name=".ChefRegister" />
         <activity android:name=".MenuList" />
@@ -51,7 +51,8 @@
         <activity android:name=".MapActivity" />
         <activity android:name=".ChefUsersMapActivity" />
         <activity android:name=".OrderConfirmation" />
-        <activity android:name=".UserNotifiedActivity"></activity>
+        <activity android:name=".UserNotifiedActivity" />
+
     </application>
 
 </manifest>

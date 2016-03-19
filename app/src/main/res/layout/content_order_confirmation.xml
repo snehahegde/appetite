@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.appetite.OrderConfirmation"
-    android:background="@drawable/redcloth3"
     tools:showIn="@layout/activity_order_confirmation"
     android:orientation="vertical">
 
@@ -20,10 +19,9 @@
         android:text="Order Summary"/>
 
     <ImageView
-        android:layout_width="300dp"
-        android:layout_height="200dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:padding="5dp"
-        android:layout_gravity="center_horizontal"
         android:id= "@+id/chefImg"/>
 
     <LinearLayout
@@ -82,7 +80,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="Quantity:  "
+            android:text="Orders:  "
             android:textColor="#AD3232"
             android:textSize="15dp" />
 

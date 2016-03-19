@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:textSize="15dp"
             android:paddingLeft="4dp"
-            android:text="Quantity:"
+            android:text="Servings: "
             android:padding="7dp"
             android:layout_marginTop="20dp"
             android:id="@+id/tv_quantityLabel"/>

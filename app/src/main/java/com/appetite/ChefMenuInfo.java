@@ -67,7 +67,7 @@ public class ChefMenuInfo extends AppCompatActivity {
             setContentView(R.layout.activity_chef_menu_info);
             }
 
-
+        Firebase.setAndroidContext(this);
 
         AppKeyPair keyPair = new AppKeyPair(APP_KEY, APP_SECRET);
         AndroidAuthSession session =
@@ -126,7 +126,7 @@ public class ChefMenuInfo extends AppCompatActivity {
                     System.out.println("Quan: " + quantity + " " + "Ing: " + ingredients + " " + "Orders: " + qOrdered);
                     if(MenuList.orderPage){
                     dishIngre = (TextView) findViewById(R.id.ingre);
-                    dishIngre.setText(customer);
+                    dishIngre.setText("Pravallika Yanamadala");
 
                     quanOrdered = (TextView) findViewById(R.id.ordered);
                     quanOrdered.setText(qOrdered);

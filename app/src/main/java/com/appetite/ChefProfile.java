@@ -65,9 +65,10 @@ public class ChefProfile extends AppCompatActivity {
             new LoadProfileImage(profileImg).execute(profilePicUrl);
             System.out.println("PhotoLink: " + profilePicUrl);
 
-        }else{
+        }
+        else{
 
-            profileImg.setImageResource(R.drawable.profile_icon);
+            //profileImg.setImageResource(R.drawable.profile_icon);
         }
         save.setOnClickListener(new View.OnClickListener() {
             @Override

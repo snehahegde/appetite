@@ -204,25 +204,25 @@ public class DishInfoFrag extends Fragment {
 
     }
 
-    public void notifyChef() {
-        int requestCode = 0;
-        int flags = 0;
-        Intent i = new Intent(getContext(), ChefMenuInfo.class);
-        i.putExtra("menu_item", dish);
-        PendingIntent pendingIntent = PendingIntent.getActivity(
-                getContext(), requestCode, i, flags);
-        int id = 12345;
-        Notification notification = new Notification.Builder(getContext())
-                .setContentTitle("Orders")
-                .setContentText("You have received an order")
-                .setSmallIcon(android.R.drawable.ic_dialog_alert)
-                .setContentIntent(pendingIntent)
-                .setPriority(Notification.PRIORITY_MAX)
-                .setVibrate(new long[0])
-                .build();
-        //  notification.flags = Notification.DEFAULT_LIGHTS | Notification.FLAG_AUTO_CANCEL;
-        NotificationManager notificationManager = (NotificationManager) getContext().getSystemService(
-                Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(id, notification);
-    }
+//    public void notifyChef() {
+//        int requestCode = 0;
+//        int flags = 0;
+//        Intent i = new Intent(getContext(), ChefMenuInfo.class);
+//        i.putExtra("menu_item", dish);
+//        PendingIntent pendingIntent = PendingIntent.getActivity(
+//                getContext(), requestCode, i, flags);
+//        int id = 12345;
+//        Notification notification = new Notification.Builder(getContext())
+//                .setContentTitle("Orders")
+//                .setContentText("You have received an order")
+//                .setSmallIcon(android.R.drawable.ic_dialog_alert)
+//                .setContentIntent(pendingIntent)
+//                .setPriority(Notification.PRIORITY_MAX)
+//                .setVibrate(new long[0])
+//                .build();
+//        //  notification.flags = Notification.DEFAULT_LIGHTS | Notification.FLAG_AUTO_CANCEL;
+//        NotificationManager notificationManager = (NotificationManager) getContext().getSystemService(
+//                Context.NOTIFICATION_SERVICE);
+//        notificationManager.notify(id, notification);
+//    }
 }

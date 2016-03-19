@@ -47,7 +47,8 @@ public class ChefsEnrolledActivity extends AppCompatActivity implements GoogleAp
     ListView chefsEnrolledlistView;
     ChefsEnrolledListAdapter chefsEnrolledListAdapter;
     String key;
-    Double mLatitude, mLongitude;
+    Double mLatitude = 37.3492;
+    Double mLongitude = -121.9381;
     GoogleApiClient mGoogleApiClient;
 
     @Override

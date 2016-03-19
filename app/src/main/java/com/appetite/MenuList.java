@@ -55,6 +55,7 @@ public class MenuList extends AppCompatActivity {
     int count=0;
     int counts=0;
     Menu menuItems;
+    int dataReading = 0;
     private static final int VOICE_RECOGNITION_REQUEST_CODE = 1234;
 
     @Override
@@ -94,11 +95,11 @@ public class MenuList extends AppCompatActivity {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
 
-                    if (postSnapshot.child("item_name").getValue() != null && postSnapshot.child("imageEncoded") != null && postSnapshot.child("cuisine")!=null) {
+                    if (postSnapshot.child("item_name").getValue() != null && postSnapshot.child("imageEncoded") != null && postSnapshot.child("cuisine") != null) {
                         itemName = postSnapshot.child("item_name").getValue().toString();
                         itemImage = postSnapshot.child("imageEncoded").getValue().toString();
                         itemCuisine = postSnapshot.child("cuisine").getValue().toString();
-                        menuList.add(new Menu(itemName,itemImage,itemCuisine));
+                        menuList.add(new Menu(itemName, itemImage, itemCuisine));
                     }
 
                 }
@@ -144,11 +145,12 @@ public class MenuList extends AppCompatActivity {
                 user = dataSnapshot.child("user").getValue().toString();
                 status = dataSnapshot.child("orderStatus").getValue().toString();
                 counts++;
-                Log.d("COUNTS++:",Login.userName+",count = "+counts);
-                if (Login.userName.equals(user)&counts>1 ) {
+                Log.d("COUNTS++:", Login.userName + ",count = " + counts);
+                if (Login.userName.equals(user) & counts > 1) {
                     notifyUser();
                 }
             }
+
             @Override
             public void onCancelled(FirebaseError firebaseError) {
 
@@ -169,10 +171,12 @@ public class MenuList extends AppCompatActivity {
                 this, requestCode, i, PendingIntent.FLAG_UPDATE_CURRENT);
         int id = 12345;
         Notification notification = new Notification.Builder(this)
-                .setContentTitle("New Order!")
-                .setContentText("Order from "+cust+"for "+dish)
-                .setSmallIcon(android.R.drawable.ic_dialog_alert)
+                .setContentTitle("Order Received")
+                .setContentText("You have a new order")
+                .setSmallIcon(R.drawable.appicon)
                 .setContentIntent(pendingIntent)
+                .setColor(0xffAD3232)
+                .setDefaults(Notification.DEFAULT_SOUND)
                 .setPriority(Notification.PRIORITY_MAX)
                 .setVibrate(new long[0])
                 .build();
@@ -197,14 +201,22 @@ public class MenuList extends AppCompatActivity {
                     menuRef.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
+                            dataReading++;
+                            System.out.println("ONDATACHANGE_COUNT: " + dataReading);
+                            System.out.println("COOK FLAG: " + MainActivity.cookModule);
+                            System.out.println("EAT FLAG: " + MainActivity.eatModule);
                             if (dataSnapshot.hasChild(menuItems.getItemName())) {
-                                Intent chefMenuDetails = new Intent(MenuList.this, ChefMenuInfo.class);
-                                chefMenuDetails.putExtra("menu_name", menuItems.getItemName());
-                                startActivity(chefMenuDetails);
+                                if(dataReading<=2) {
+                                    Intent chefMenuDetails = new Intent(MenuList.this, ChefMenuInfo.class);
+                                    chefMenuDetails.putExtra("menu_name", menuItems.getItemName());
+                                    startActivity(chefMenuDetails);
+                                    System.out.println("ZzzzzzZZZZ");
+                                }
                             } else {
                                 Intent chefMenuDetails = new Intent(MenuList.this, ChefMenuItemActivity.class);
                                 chefMenuDetails.putExtra("item_name", menuItems.getItemName());
                                 startActivity(chefMenuDetails);
+                                System.out.println("YYYYYYYYYYYYYYY");
                             }
                         }
 
@@ -233,9 +245,11 @@ public class MenuList extends AppCompatActivity {
         int id = 12345;
         Notification notification = new Notification.Builder(this)
                 .setContentTitle("Order Status!")
-                .setContentText("")
-                .setSmallIcon(android.R.drawable.ic_dialog_alert)
+                .setContentText("You have new update.")
+                .setColor(0xffAD3232)
+                .setSmallIcon(R.drawable.appicon)
                 .setContentIntent(pendingIntent)
+                .setDefaults(Notification.DEFAULT_SOUND)
                 .setPriority(Notification.PRIORITY_MAX)
                 .setVibrate(new long[0])
                 .build();

@@ -47,6 +47,7 @@
             android:layout_height="wrap_content"
             android:textSize="15dp"
             android:text=" "
+            android:textColor="#000000"
             android:id="@+id/view_ingredients"/>
         </LinearLayout>
     <LinearLayout
@@ -60,12 +61,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15dp"
-            android:text="Quantity: "
+            android:text="Servings: "
             android:textColor="#AD3232" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15dp"
+            android:textColor="#000000"
             android:id="@+id/view_quantity" />
     </LinearLayout>
     <LinearLayout
@@ -78,14 +80,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15dp"
+            android:textSize="18dp"
             android:textColor="#AD3232"
             android:text="Orders: " />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15dp"
+            android:textSize="18dp"
             android:text=" "
+            android:textColor="#000000"
             android:id="@+id/view_quantityOrdered"/>
     </LinearLayout>
 

@@ -57,7 +57,7 @@ public class DishDetailsActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("Dish Info"));
         tabLayout.addTab(tabLayout.newTab().setText("Reviews"));
-        //tabLayout.addTab(tabLayout.newTab().setText("Map"));
+
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
@@ -153,7 +153,6 @@ public class DishDetailsActivity extends AppCompatActivity {
                     new ResultCallback<Status>() {
                         @Override
                         public void onResult(Status status) {
-                            //mStatusTextView.setText("");
                             Intent returnToLogin = new Intent(getApplicationContext(), MainActivity.class);
                             returnToLogin.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(returnToLogin);
@@ -179,7 +178,4 @@ public class DishDetailsActivity extends AppCompatActivity {
         super.onStop();
         mGoogleApiClient.disconnect();
     }
-
-
-
 }

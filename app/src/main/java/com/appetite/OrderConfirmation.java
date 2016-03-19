@@ -106,7 +106,6 @@ public class OrderConfirmation extends AppCompatActivity {
 
         Bundle priceBundle = getIntent().getExtras();
         user_price = priceBundle.getString("price");
-        System.out.println("PRICE--> " + user_price);
         TextView u_price = (TextView)findViewById(R.id.price);
         u_price.setText("$"+user_price);
 

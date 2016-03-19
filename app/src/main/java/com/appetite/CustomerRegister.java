@@ -25,9 +25,7 @@ public class CustomerRegister extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_register);
         Firebase.setAndroidContext(this);
-        //etName = (EditText)findViewById(R.id.etName);
-        //etPhone = (EditText)findViewById(R.id.etPhone);
-        //etAddress = (EditText)findViewById(R.id.etAddress);
+
         etUserName = (EditText)findViewById(R.id.etUsername);
         etPassword = (EditText)findViewById(R.id.etPassword);
 
@@ -42,7 +40,6 @@ public class CustomerRegister extends AppCompatActivity implements View.OnClickL
         pwd = etPassword.getText().toString();
         mRef = new Firebase("https://app-etite.firebaseio.com/userInfo/customer");
         mRef.child(username).setValue(new User(username, pwd));
-
 
     }
 

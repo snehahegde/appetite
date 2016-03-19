@@ -34,8 +34,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         setContentView(R.layout.activity_main);
 
-//        appTitle=(TextView)findViewById(R.id.title);
-//        appTitle.setTextColor(Color.parseColor("#FFFFFF"));
         bEat = (ImageView) findViewById(R.id.bEat);
 
         bCook = (ImageView) findViewById(R.id.bCook);

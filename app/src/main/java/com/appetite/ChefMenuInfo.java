@@ -58,10 +58,8 @@ public class ChefMenuInfo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         if(MenuList.orderPage){
         setContentView(R.layout.order_page);
-            //Bundle bundle = getIntent().getExtras();
             chefmenu=(String)this.getIntent().getStringExtra("menuname");
             customer=(String)this.getIntent().getStringExtra("user");
-            //System.out.println("Customer who ordered : "+customer);
         }
                 else{
             setContentView(R.layout.activity_chef_menu_info);
@@ -102,12 +100,10 @@ public class ChefMenuInfo extends AppCompatActivity {
         else{
             Bundle bundle = getIntent().getExtras();
             chef_menu = bundle.getString("menu_name");
-            System.out.println("CHEFMENU: " + chef_menu);
             menuName = (TextView) findViewById(R.id.chef_menu);
             menuName.setText(chef_menu);
         }
 
-        System.out.println("ChefNaMe: " + chefName + " " + "ChefMeNu: " + chef_menu);
         mRef = new Firebase("https://app-etite.firebaseio.com/chefsEnrolled/" + chefName + "/" + chef_menu+"/");
 
         mRef.addValueEventListener(new ValueEventListener() {
@@ -115,7 +111,6 @@ public class ChefMenuInfo extends AppCompatActivity {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 if(dataSnapshot.child("quantity").getValue()!=null & dataSnapshot.child("ingredients").getValue()!=null) {
-                    System.out.println("987654321 : " + "retrieving quantity ordered and remaining quantity from chefMenuInfo class");
                     quantity = dataSnapshot.child("quantity").getValue().toString();
                     ingredients = dataSnapshot.child("ingredients").getValue().toString();
                     if (dataSnapshot.child("quantityOrdered").getValue() == null) {
@@ -123,7 +118,6 @@ public class ChefMenuInfo extends AppCompatActivity {
                     } else {
                         qOrdered = dataSnapshot.child("quantityOrdered").getValue().toString();
                     }
-                    System.out.println("Quan: " + quantity + " " + "Ing: " + ingredients + " " + "Orders: " + qOrdered);
                     if(MenuList.orderPage){
                     dishIngre = (TextView) findViewById(R.id.ingre);
                     dishIngre.setText("Pravallika Yanamadala");
@@ -144,7 +138,6 @@ public class ChefMenuInfo extends AppCompatActivity {
 
                         cheffMenuImg = (ImageView)findViewById(R.id.chef_menuImg);
                     }
-                    //cheffMenuImg.setImageResource(R.drawable.salmon_slaw);
 
                     AsyncTask<String,Void, ByteArrayOutputStream> downloadHandler = new AsyncTask<String,Void,ByteArrayOutputStream>() {
 
@@ -185,12 +178,9 @@ public class ChefMenuInfo extends AppCompatActivity {
                 }
             };
 
-
-
             @Override
             public void onCancelled(FirebaseError firebaseError) {
                 Log.d("The read failed: ", firebaseError.getMessage());
-
             }
         });
 
@@ -208,6 +198,7 @@ public class ChefMenuInfo extends AppCompatActivity {
         }
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -232,16 +223,13 @@ public class ChefMenuInfo extends AppCompatActivity {
                     new ResultCallback<Status>() {
                         @Override
                         public void onResult(Status status) {
-                            //mStatusTextView.setText("");
                             Intent returnToLogin = new Intent(getApplicationContext(), MainActivity.class);
                             returnToLogin.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(returnToLogin);
                             finish();
                             MainActivity.cookModule = false;
                             MainActivity.eatModule = false;
-
-
-                        }
+                       }
                     });
             return true;
         }

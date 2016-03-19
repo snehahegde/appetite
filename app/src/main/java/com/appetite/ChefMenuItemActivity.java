@@ -109,19 +109,12 @@ public class ChefMenuItemActivity extends AppCompatActivity {
 
     public void postChefDetails(){
 
-
-
-        System.out.println("Q_INPUT: " + quantityInput);
-        // some change
         bt_post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ingredients = et_ingredients.getText().toString();
-                //quantity = Integer.parseInt(quantityInput);
                 itemName = getIntent().getExtras().getString("item_name");
                 chefName = Login.userName;
-                System.out.println(chefName + " " + itemName + " " + quantityInput + " " + ingredients + foodImagePath);
-
                 mRef = new Firebase("https://app-etite.firebaseio.com/chefsEnrolled/" + chefName);
                 mRef.child(itemName).setValue(new ChefMenuItem(ingredients, quantityInput, foodImagePath));
                 finish();
@@ -165,7 +158,6 @@ public class ChefMenuItemActivity extends AppCompatActivity {
                     new ResultCallback<Status>() {
                         @Override
                         public void onResult(Status status) {
-                            //mStatusTextView.setText("");
                             Intent returnToLogin = new Intent(getApplicationContext(), MainActivity.class);
                             returnToLogin.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(returnToLogin);
@@ -201,7 +193,6 @@ public class ChefMenuItemActivity extends AppCompatActivity {
 
                             @Override
                             protected String doInBackground(InputStream... inputStream) {
-                                //BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream[0]);
                                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
                                 int fileSize = 0;
@@ -256,6 +247,4 @@ public class ChefMenuItemActivity extends AppCompatActivity {
         super.onStop();
         mGoogleApiClient.disconnect();
     }
-
-
 }

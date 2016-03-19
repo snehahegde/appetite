@@ -43,7 +43,6 @@ public class ChefsEnrolledActivity extends AppCompatActivity implements GoogleAp
     String chef_menu,chefs_enrolled,chef_ingredients,quantity_avbl;
     List<ChefsEnrolledList> chefsEnrolledDetails;
     Map<String,ChefMenuDetails>  chefMenuDetailsMap = new HashMap<String, ChefMenuDetails>();
-    //ChefMenuDetails chefMenuDetails;
     ListView chefsEnrolledlistView;
     ChefsEnrolledListAdapter chefsEnrolledListAdapter;
     String key;
@@ -66,15 +65,12 @@ public class ChefsEnrolledActivity extends AppCompatActivity implements GoogleAp
         }
 
         chefsEnrolledDetails = new ArrayList<ChefsEnrolledList>();
-//        itemName = (TextView) findViewById(R.id.tv_menuName);
         Bundle bundle = getIntent().getExtras();
         chef_menu = bundle.getString("menuName");
-        System.out.println("MENU: " + chef_menu);
 
         topLabel = (TextView)findViewById(R.id.chefsEnrolledLabel);
         topLabel.setText("Your chefs' for " + chef_menu + "!");
 
-//        itemName.setText(chef_menu);
         Firebase.setAndroidContext(this);
         mRef = new Firebase("https://app-etite.firebaseio.com/chefsEnrolled/");
         mRef.addValueEventListener(new ValueEventListener() {
@@ -84,12 +80,10 @@ public class ChefsEnrolledActivity extends AppCompatActivity implements GoogleAp
                 chefMenuDetailsMap.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
-                    System.out.println("MAIN CHILDREN: " + postSnapshot.hasChild(chef_menu));
-
                     if (postSnapshot.hasChild(chef_menu)) {
                         chefs_enrolled = postSnapshot.getKey();
                             if(chefs_enrolled!=null && Integer.parseInt(dataSnapshot.child(chefs_enrolled).child(chef_menu).child("quantity").getValue().toString())>0){
-                                //displayList =true;
+
                                 chef_ingredients = dataSnapshot.child(chefs_enrolled).child(chef_menu).child("ingredients").getValue().toString();
                                 quantity_avbl = dataSnapshot.child(chefs_enrolled).child(chef_menu).child("quantity").getValue().toString();
                                 String food_image;
@@ -101,15 +95,7 @@ public class ChefsEnrolledActivity extends AppCompatActivity implements GoogleAp
 
                                 ChefMenuDetails chefMenuDetails = new ChefMenuDetails(chef_ingredients, quantity_avbl, food_image);
                                 chefMenuDetailsMap.put(chefs_enrolled, chefMenuDetails);
-                            System.out.println("Chef_details: " + chefs_enrolled + " " + chef_ingredients + " " + quantity_avbl);
-
-                            System.out.println("CHEF_LIST: " + chefMenuDetailsMap);
-
                         }
-
-
-                    } else {
-
                     }
                 }
 
@@ -123,13 +109,11 @@ public class ChefsEnrolledActivity extends AppCompatActivity implements GoogleAp
         });
     }
     public void chefsList(){
-        System.out.println("chef list");
         picRef = new Firebase("https://app-etite.firebaseio.com/userInfo/chef");
         picRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                System.out.println("CHEF_MAP: " + chefMenuDetailsMap);
                 chefsEnrolledDetails.clear();
 
                 Iterator myVeryOwnIterator = chefMenuDetailsMap.keySet().iterator();
@@ -140,13 +124,10 @@ public class ChefsEnrolledActivity extends AppCompatActivity implements GoogleAp
                     String latitude = dataSnapshot.child(key).child("latitude").getValue().toString();
                     String longitude = dataSnapshot.child(key).child("longitude").getValue().toString();
                     ChefMenuDetails value=chefMenuDetailsMap.get(key);
-                    System.out.println("Key: " + key + " Ingre: " + " " + value.getIngredients() + "Quan: " + " " + value.getQuantity() + " " + "Photo:" + " " + chefpicUrl);
 
                     chefsEnrolledDetails.add(new ChefsEnrolledList(key, chefpicUrl, value.getIngredients(), value.getQuantity(), value.getFoodImg(), latitude, longitude));
-                    System.out.println("FINAL LIST: " + chefsEnrolledDetails);
 
-                        chefsEnrolledList();
-
+                    chefsEnrolledList();
                 }
 
             }
@@ -171,15 +152,12 @@ public class ChefsEnrolledActivity extends AppCompatActivity implements GoogleAp
                 ChefsEnrolledList chefsEnrolledList = chefsEnrolledDetails.get(position);
 
                 Intent chefDishInfo = new Intent(ChefsEnrolledActivity.this, DishDetailsActivity.class);
-                System.out.println("CNAME: " + chefsEnrolledList.getChefName());
                 chefDishInfo.putExtra("chefName", chefsEnrolledList.getChefName());
                 chefDishInfo.putExtra("chefDish", chef_menu);
                 chefDishInfo.putExtra("chefIngredients", chefsEnrolledList.getIngredients());
                 chefDishInfo.putExtra("chefQuantity", chefsEnrolledList.getQuantity());
                 chefDishInfo.putExtra("foodImage", chefsEnrolledList.getFoodImage());
                 startActivity(chefDishInfo);
-
-
             }
         });
 
@@ -212,7 +190,6 @@ public class ChefsEnrolledActivity extends AppCompatActivity implements GoogleAp
     @Override
     public void onConnected(Bundle bundle) {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
             return;
         }
         Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);

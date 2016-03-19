@@ -73,18 +73,13 @@ public class ChefUsersMapActivity extends FragmentActivity implements OnMapReady
             return;
         }
 
-
-
         Bundle bundle = getIntent().getExtras();
         chef_name = bundle.getString("chef_name");
-
-
-
     }
+
     public void sendRequest(){
 
-                String stringUrl = "https://maps.googleapis.com/maps/api/directions/json?origin="+""+userLocString+"&destination="+""+cheflatlng+"&key=AIzaSyCZOwTuuqtZCpy0SS_Y_KERUnZtwXl_MuE";
-        System.out.println("SURL: " + stringUrl);
+        String stringUrl = "https://maps.googleapis.com/maps/api/directions/json?origin="+""+userLocString+"&destination="+""+cheflatlng+"&key=AIzaSyCZOwTuuqtZCpy0SS_Y_KERUnZtwXl_MuE";
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
@@ -153,6 +148,7 @@ public class ChefUsersMapActivity extends FragmentActivity implements OnMapReady
 
             return;
         }
+
         Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (mLastLocation != null) {
             mLatitude = mLastLocation.getLatitude();
@@ -163,7 +159,6 @@ public class ChefUsersMapActivity extends FragmentActivity implements OnMapReady
             mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(mLatitude, mLongitude)));
 
             userLocString = String.valueOf(mLatitude) + "," + String.valueOf(mLongitude);
-            System.out.println("userLoc: " + userLocString);
 
             locRef = new Firebase("https://app-etite.firebaseio.com/userInfo/chef");
             locRef.addValueEventListener(new ValueEventListener() {
@@ -176,11 +171,6 @@ public class ChefUsersMapActivity extends FragmentActivity implements OnMapReady
                     LatLng chefPos = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
                     mMap.addMarker(new MarkerOptions().position(chefPos).title(chef_name));
                     cheflatlng = latitude + "," + longitude;
-                    System.out.println("stringURL: " + cheflatlng);
-
-                    System.out.println("LOC: " + " " + location + " " + latitude + " " + longitude);
-//                String stringUrl = "https://maps.googleapis.com/maps/api/directions/json?origin="+""+userLocString+"&destination="+""+cheflatlng+"&key=AIzaSyCZOwTuuqtZCpy0SS_Y_KERUnZtwXl_MuE";
-//                System.out.println("SURL: " + stringUrl);
                     sendRequest();
                 }
 
@@ -203,5 +193,3 @@ public class ChefUsersMapActivity extends FragmentActivity implements OnMapReady
     }
 
 }
-
-

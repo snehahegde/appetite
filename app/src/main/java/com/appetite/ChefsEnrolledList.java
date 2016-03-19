@@ -25,7 +25,6 @@ public class ChefsEnrolledList {
         this.foodImg = foodImg;
         this.latitude = Double.parseDouble(latitude);
         this.longitude = Double.parseDouble(longitude);
-
     }
 
     public void setLatitude(String latitude) {
@@ -104,11 +103,7 @@ public class ChefsEnrolledList {
             } else {
                 return 0;
             }
-
-
         }
 
     }
-
-
 }

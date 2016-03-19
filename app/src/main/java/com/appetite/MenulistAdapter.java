@@ -40,10 +40,10 @@ public class MenulistAdapter extends ArrayAdapter<Menu> {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.menulist_rowlayout, parent, false);
 
-//        //item name
+        //item name
         TextView tv_itemName = (TextView) view.findViewById(R.id.itemName);
         tv_itemName.setText(menuItems.getItemName());
-//
+
         //item cuisine
         TextView tv_itemPrice = (TextView) view.findViewById(R.id.itemCuisine);
         tv_itemPrice.setText(menuItems.getItemCuisine());
@@ -56,9 +56,6 @@ public class MenulistAdapter extends ArrayAdapter<Menu> {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-        //this.notifyDataSetChanged();
 
         return view;
 

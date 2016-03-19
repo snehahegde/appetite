@@ -200,27 +200,18 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             userName = acct.getDisplayName();
             email = acct.getEmail();
             photoUrl = acct.getPhotoUrl();
-            System.out.println(userName);
             if(MainActivity.cookModule) {
                 chefRef = new Firebase("https://app-etite.firebaseio.com/userInfo/chef");
 
                 chefRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
- //                       System.out.println("uname: " + userName);
-//                        System.out.println("User present: " + dataSnapshot.hasChild(userName));
-
 
                        if( (!dataSnapshot.child(userName).hasChild("phone")) && (!dataSnapshot.child(userName).hasChild("location"))){
-
                            chefProfile(userName, email, photoUrl);
-
-                       }else{
-
+                       } else{
                            displayMenu();
-
                        }
-
                     }
 
                     @Override
@@ -230,7 +221,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 });
 
             }else if(MainActivity.eatModule){
-                System.out.println("EN: " + userName);
                 customerRef = new Firebase("https://app-etite.firebaseio.com/userInfo/customer");
                 customerRef.child(userName).setValue(new User(userName) );
                 displayMenu();
@@ -240,18 +230,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 Toast.makeText(getApplicationContext(),"Invalid Login",Toast.LENGTH_SHORT).show();
         }
     }
-//    public void signOut() {
-//        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
-//                new ResultCallback<Status>() {
-//                    @Override
-//                    public void onResult(Status status) {
-//                        //mStatusTextView.setText("");
-//
-//                    }
-//                });
-//    }
+
     public void chefProfile(String gname,String gmail, Uri picUrl){
-        System.out.println("URL: " + picUrl.toString());
         Intent chefProfile = new Intent(this, ChefProfile.class);
         chefProfile.putExtra("username",gname);
         chefProfile.putExtra("email",gmail);
@@ -277,5 +257,3 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     }
 
 }
-
-

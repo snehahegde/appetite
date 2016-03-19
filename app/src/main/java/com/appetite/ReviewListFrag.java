@@ -39,7 +39,6 @@ public class ReviewListFrag extends Fragment {
                 cap = new ArrayList();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     String rev = postSnapshot.child("review").getValue().toString();
-                    System.out.println("lkjh= "+rev);
                     String rat = postSnapshot.child("rating").getValue().toString();
                     String dat = postSnapshot.child("date").getValue().toString();
                     String usr = postSnapshot.child("user").getValue().toString();
@@ -68,14 +67,13 @@ public class ReviewListFrag extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         if (requestCode == REQUEST && resultCode == 0) {
             ca.notifyDataSetChanged();
-
         }
     }
+
     public void viewList(){
         ListView lview = (ListView) v.findViewById(R.id.listView);
         ca = new CustomAdapter(getContext(), R.layout.custom_row, cap);
         lview.setAdapter(ca);
-
     }
 
 }

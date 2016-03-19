@@ -15,7 +15,7 @@ public class Reviews {
         this.rating=rating;
         this.date=date;
     }
-    // public String getChef(){return chef;}
+
     public String getUser(){
         return user;
     }

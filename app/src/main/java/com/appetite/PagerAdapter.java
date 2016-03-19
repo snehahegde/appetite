@@ -30,9 +30,6 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
             case 1:
                 ReviewListFrag revTab = new ReviewListFrag();
                 return revTab;
-           /** case 2:
-             MapFrag mapTab = new MapFrag();
-             return mapTab;*/
             default:
                 return null;
         }

@@ -66,10 +66,9 @@ public class DishInfoFrag extends Fragment {
                         "bu-o0D7UlrAAAAAAAAAACqbhdtpfpEG8J1_KrFJWnCLfyxlnJ8q_44LSiXkk1yig");
         mDBApi = new DropboxAPI<AndroidAuthSession>(session);
 
-
         View v = inflater.inflate(R.layout.tab_dish_info, container, false);
         chefDishPic = (ImageView) v.findViewById(R.id.chefDishPic);
-        //chefDishPic.setImageResource(R.drawable.salmon_slaw);
+
         imagePath = DishDetailsActivity.chefFoodImage;
 
         if (imagePath.equals("")) {
@@ -82,7 +81,6 @@ public class DishInfoFrag extends Fragment {
 
                     ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                     try {
-
                         DropboxAPI.DropboxFileInfo info = mDBApi.getFile(imagePath, null, byteArrayOutputStream, null);
                     } catch (DropboxException e) {
                         e.printStackTrace();
@@ -109,7 +107,6 @@ public class DishInfoFrag extends Fragment {
 
         chefIngredients = (TextView) v.findViewById(R.id.chefIngredients);
         chefIngredients.setText(DishDetailsActivity.chefDishIngredients);
-        System.out.println(" " + DishDetailsActivity.chefDishQuantity);
         chefQuantity = (TextView) v.findViewById(R.id.chefQuantity);
 
         chefQuantity.setText(DishDetailsActivity.chefDishQuantity);
@@ -158,7 +155,6 @@ public class DishInfoFrag extends Fragment {
 
         Map<String, Object> quantityOrderedMap = new HashMap<String, Object>();
         quantityOrderedMap.put(DishDetailsActivity.chefDishName + "/quantityOrdered", quantityOrdered);
-        System.out.println("Testing" + DishDetailsActivity.chefName);
         quantityOrderedMap.put(DishDetailsActivity.chefDishName + "/quantity", String.valueOf(remainingQuantity));
         mRef.updateChildren(quantityOrderedMap);
 
@@ -193,7 +189,6 @@ public class DishInfoFrag extends Fragment {
                 orderConfirm.putExtra("chefName", DishDetailsActivity.chefName);
                 orderConfirm.putExtra("chefDish",DishDetailsActivity.chefDishName);
                 orderConfirm.putExtra("quantity",quantityOrdered);
-                System.out.println("PRICE: " + String.valueOf(price));
                 orderConfirm.putExtra("price",String.valueOf(price));
                 startActivity(orderConfirm);
 
@@ -203,26 +198,4 @@ public class DishInfoFrag extends Fragment {
         alertDialog.create().show();
 
     }
-
-//    public void notifyChef() {
-//        int requestCode = 0;
-//        int flags = 0;
-//        Intent i = new Intent(getContext(), ChefMenuInfo.class);
-//        i.putExtra("menu_item", dish);
-//        PendingIntent pendingIntent = PendingIntent.getActivity(
-//                getContext(), requestCode, i, flags);
-//        int id = 12345;
-//        Notification notification = new Notification.Builder(getContext())
-//                .setContentTitle("Orders")
-//                .setContentText("You have received an order")
-//                .setSmallIcon(android.R.drawable.ic_dialog_alert)
-//                .setContentIntent(pendingIntent)
-//                .setPriority(Notification.PRIORITY_MAX)
-//                .setVibrate(new long[0])
-//                .build();
-//        //  notification.flags = Notification.DEFAULT_LIGHTS | Notification.FLAG_AUTO_CANCEL;
-//        NotificationManager notificationManager = (NotificationManager) getContext().getSystemService(
-//                Context.NOTIFICATION_SERVICE);
-//        notificationManager.notify(id, notification);
-//    }
 }

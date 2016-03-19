@@ -165,7 +165,6 @@ public class MenuList extends AppCompatActivity {
         Intent i = new Intent(this,ChefMenuInfo.class);
 
         i.putExtra("menuname",dish);
-        System.out.println("FOOD_NAME: " + dish);
         i.putExtra("user", Login.userName);
         PendingIntent pendingIntent = PendingIntent.getActivity(
                 this, requestCode, i, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -202,21 +201,17 @@ public class MenuList extends AppCompatActivity {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             dataReading++;
-                            System.out.println("ONDATACHANGE_COUNT: " + dataReading);
-                            System.out.println("COOK FLAG: " + MainActivity.cookModule);
-                            System.out.println("EAT FLAG: " + MainActivity.eatModule);
+
                             if (dataSnapshot.hasChild(menuItems.getItemName())) {
                                 if(dataReading<=2) {
                                     Intent chefMenuDetails = new Intent(MenuList.this, ChefMenuInfo.class);
                                     chefMenuDetails.putExtra("menu_name", menuItems.getItemName());
                                     startActivity(chefMenuDetails);
-                                    System.out.println("ZzzzzzZZZZ");
                                 }
                             } else {
                                 Intent chefMenuDetails = new Intent(MenuList.this, ChefMenuItemActivity.class);
                                 chefMenuDetails.putExtra("item_name", menuItems.getItemName());
                                 startActivity(chefMenuDetails);
-                                System.out.println("YYYYYYYYYYYYYYY");
                             }
                         }
 
@@ -229,14 +224,12 @@ public class MenuList extends AppCompatActivity {
                 } else if (MainActivity.eatModule) {
                     Intent chefsEnrolled = new Intent(MenuList.this, ChefsEnrolledActivity.class);
                     chefsEnrolled.putExtra("menuName", menuItems.getItemName());
-                    System.out.println("EATMENU: " + menuItems.getItemName());
                     startActivity(chefsEnrolled);
                 }
-
             }
         });
-
     }
+
     public void notifyUser(){
         int requestCode = 0;
         Intent i = new Intent(this,UserNotifiedActivity.class);
@@ -268,7 +261,6 @@ public class MenuList extends AppCompatActivity {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     if (postSnapshot.child("item_name").getValue() != null && postSnapshot.child("imageEncoded") != null && postSnapshot.child("cuisine") != null) {
                         String itemName = postSnapshot.child("item_name").getValue().toString();
-//                        String itemPrice = postSnapshot.child("item_price").getValue().toString();
                         String itemImage = postSnapshot.child("imageEncoded").getValue().toString();
                         String itemCuisine = postSnapshot.child("cuisine").getValue().toString();
                         if (itemName.equalsIgnoreCase(searchDish) || itemCuisine.equalsIgnoreCase(searchDish)) {
@@ -305,10 +297,9 @@ public class MenuList extends AppCompatActivity {
         if (requestCode == VOICE_RECOGNITION_REQUEST_CODE && resultCode == RESULT_OK) {
             List<String> matches = data.getStringArrayListExtra(
                     RecognizerIntent.EXTRA_RESULTS);
-            //((TextView) findViewById(R.id.searchW)).setText(matches.get(0));
+
             searchWord.setText(matches.get(0));
             String voiceInput = searchWord.getText().toString();
-            System.out.println("VOICE_INPUT: " + voiceInput);
             if(voiceInput!=null ){
                 searchContent(voiceInput);
             }
@@ -336,7 +327,6 @@ public class MenuList extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_home) {
-
             return true;
         }
 
@@ -352,7 +342,6 @@ public class MenuList extends AppCompatActivity {
                     new ResultCallback<Status>() {
                         @Override
                         public void onResult(Status status) {
-                            //mStatusTextView.setText("");
                             Intent returnToLogin = new Intent(getApplicationContext(), MainActivity.class);
                             returnToLogin.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(returnToLogin);

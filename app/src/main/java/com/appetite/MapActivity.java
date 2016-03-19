@@ -41,7 +41,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     ArrayList<String> chefsList;
     Firebase mRef,picRef;
     String chefs_enrolled,chef_menu;
-    // List<Chef> chefList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,17 +74,11 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
-                    System.out.println("MAIN CHILDREN: " + postSnapshot.hasChild(chef_menu));
-
                     if (postSnapshot.hasChild(chef_menu)) {
                         chefs_enrolled = postSnapshot.getKey();
                         chefsList.add(chefs_enrolled);
-
                     }
-
-
                 }
-                System.out.println("CHEFS_LIST: " + chefsList);
             }
 
             @Override
@@ -93,8 +86,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
             }
         });
-
-
     }
 
     @Override
@@ -102,40 +93,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         mMap = googleMap;
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
             return;
         }
-//        Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-//        if (mLastLocation != null) {
-//            mLatitude = mLastLocation.getLatitude();
-//            mLongitude = mLastLocation.getLongitude();
-//            mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(mLatitude, mLongitude)));
-//
-//        }
-        //Kavitha's part - chefs' enrolled lat long
-//        picRef = new Firebase("https://app-etite.firebaseio.com/userInfo/chef");
-//        picRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//
-//                Iterator iterator = chefsList.iterator();
-//                while(iterator.hasNext()) {
-//                    String key=(String)iterator.next();
-//                    String chef = dataSnapshot.child(key).getValue().toString();
-//                    String address = dataSnapshot.child(key).child("address").getValue().toString();
-//                    String latitude = dataSnapshot.child(key).child("latitude").getValue().toString();
-//                    String longitude = dataSnapshot.child(key).child("longitude").getValue().toString();
-//
-//                    System.out.println("CHEF:" + chef + "ADD: " + address + "LAT: " + latitude + "LONG: " + longitude);
-//
-//                }
-//
-//            }
-//            @Override
-//            public void onCancelled(FirebaseError firebaseError) {
-//
-//            }
-//        });
         mMap.animateCamera(CameraUpdateFactory.zoomTo(16));
     }
 
@@ -146,14 +105,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             return;
         }
         Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-//        if (mLastLocation != null) {
-//            mLatitude = mLastLocation.getLatitude();
-//            mLongitude = mLastLocation.getLongitude();
-//
-//            LatLng newPos = new LatLng(mLatitude, mLongitude);
-//            mMap.addMarker(new MarkerOptions().position(newPos).title("Shegde's"));
-//            mMap.moveCamera(CameraUpdateFactory.newLatLng(newPos));
-//        }
+
         picRef = new Firebase("https://app-etite.firebaseio.com/userInfo/chef");
         picRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -170,8 +122,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                     LatLng newPos = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
                     mMap.addMarker(new MarkerOptions().position(newPos).title(chef));
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(newPos));
-                    System.out.println("CHEF:" + chef + "ADD: " + address + "LAT: " + latitude + "LONG: " + longitude);
-
                 }
 
             }
@@ -192,4 +142,3 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
     }
 }
-

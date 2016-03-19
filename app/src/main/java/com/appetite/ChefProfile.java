@@ -61,35 +61,22 @@ public class ChefProfile extends AppCompatActivity {
         profilePicUrl = picBundle.getString("picUrl");
 
         if(profilePicUrl!=null){
-
             new LoadProfileImage(profileImg).execute(profilePicUrl);
-            System.out.println("PhotoLink: " + profilePicUrl);
-
-        }
-        else{
-
-            //profileImg.setImageResource(R.drawable.profile_icon);
         }
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 contactNo = phone.getText().toString();
-
                 location = address.getText().toString();
 
-
                 getLocationFromAddress(location);
-
-                System.out.println("Loc: " + location);
-                System.out.println("LAT: " + latitude + " " + "LNG: " + longitude);
 
                 mRef = new Firebase("https://app-etite.firebaseio.com/userInfo/chef");
                 mRef.child(username).setValue(new User(username, email, profilePicUrl,contactNo,location,latitude,longitude));
 
                 Intent menuList = new Intent(getApplicationContext(),MenuList.class);
                 startActivity(menuList);
-
             }
         });
 
@@ -128,7 +115,6 @@ public class ChefProfile extends AppCompatActivity {
 
         Geocoder coder = new Geocoder(this);
         List<Address> address;
-        //GeoPoint p1 = null;
 
         try {
             address = coder.getFromLocationName(strAddress,5);
@@ -143,12 +129,6 @@ public class ChefProfile extends AppCompatActivity {
 
             latitude = String.valueOf(location.getLatitude());
             longitude = String.valueOf(location.getLongitude());
-            //System.out.println("Latitude" + String.valueOf(location.getLatitude()) + "Longitude"+ String.valueOf(location.getLongitude()));
-
-            //p1 = new GeoPoint((int) (location.getLatitude() * 1E6),
-            //(int) (location.getLongitude() * 1E6));
-
-            //return p1;
         } catch(IOException e) {
 
             Log.d("Excep","location exception thrown");

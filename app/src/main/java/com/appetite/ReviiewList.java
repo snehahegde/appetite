@@ -38,7 +38,6 @@ public class ReviiewList extends AppCompatActivity {
                 cap = new ArrayList();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     String rev = postSnapshot.child("review").getValue().toString();
-                    System.out.println("lkjh= "+rev);
                     String rat = postSnapshot.child("rating").getValue().toString();
                     String dat = postSnapshot.child("date").getValue().toString();
                     String usr = postSnapshot.child("user").getValue().toString();
@@ -74,5 +73,4 @@ public class ReviiewList extends AppCompatActivity {
         lview.setAdapter(ca);
 
     }
-
 }

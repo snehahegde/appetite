@@ -41,8 +41,6 @@ public class ChefsEnrolledListAdapter extends ArrayAdapter<ChefsEnrolledList> {
         this.chefsList = chefsList;
         mLatitude = latitude;
         mLongitude = longitude;
-
-
     }
 
     @Override
@@ -68,7 +66,7 @@ public class ChefsEnrolledListAdapter extends ArrayAdapter<ChefsEnrolledList> {
 
         double distance = Math.sqrt((Math.pow(mLatitude - chefLattitude, 2) + (Math.pow(mLongitude - chefLongitude, 2))));
         TextView distanceTextView = (TextView)view.findViewById(R.id.distance);
-        //String distanceStr = String.valueOf(distance*69);
+
         String distanceStr = String.format("%.2f mi", distance * 69);
         distanceTextView.setText(distanceStr);
         RatingBar rBar=(RatingBar)view.findViewById(R.id.ratingBar3);
@@ -103,7 +101,4 @@ public class ChefsEnrolledListAdapter extends ArrayAdapter<ChefsEnrolledList> {
             bmImage.setImageBitmap(result);
         }
     }
-
-
-
 }
